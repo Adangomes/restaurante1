@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Motorista | MYDI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -15,7 +16,7 @@
         <h3>🔐 Login do Motorista</h3>
         <input type="text" id="nomeLogin" placeholder="Nome">
         <input type="password" id="senhaLogin" placeholder="Senha">
-        <button onclick="login()">ENTRAR</button>
+        <button id="btnLogin">ENTRAR</button>
     </section>
 
     <!-- APP -->
@@ -28,14 +29,15 @@
 
         <section id="corrida" class="hidden">
             <h3>🚕 Corrida disponível</h3>
+
             <p><strong>Origem:</strong> <span id="origemTxt"></span></p>
             <p><strong>Destino:</strong> <span id="destinoTxt"></span></p>
             <p>📏 <span id="distancia"></span></p>
             <p>💰 <span id="valor"></span></p>
 
             <div class="acoes">
-                <button class="aceitar" onclick="aceitarCorrida()">ACEITAR</button>
-                <button class="recusar" onclick="recusarCorrida()">RECUSAR</button>
+                <button class="aceitar" id="btnAceitar">ACEITAR</button>
+                <button class="recusar" id="btnRecusar">RECUSAR</button>
             </div>
         </section>
 
