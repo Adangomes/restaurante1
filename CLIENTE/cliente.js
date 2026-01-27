@@ -13,7 +13,8 @@ let valorCorrida = 0;
 let origemSelecionada = false;
 let destinoSelecionado = false;
 
-// 📍 AUTOCOMPLETE DE ENDEREÇOS (JARAGUÁ DO SUL)
+
+// AQUI VAI LIMITAR SO JARAGUA DO SUL
 async function buscarEndereco(texto, container, onSelect) {
     if (texto.length < 2) {
         container.innerHTML = "";
@@ -22,7 +23,7 @@ async function buscarEndereco(texto, container, onSelect) {
 
     const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(
         texto
-    )}&bias=proximity:-49.0716,-26.4851&limit=5&apiKey=${GEOAPIFY_KEY}`;
+    )}&filter=city:Jaraguá do Sul&country=BR&limit=5&apiKey=${GEOAPIFY_KEY}`;
 
     const res = await fetch(url);
     const data = await res.json();
@@ -32,6 +33,13 @@ async function buscarEndereco(texto, container, onSelect) {
     if (!data.features || !data.features.length) return;
 
     data.features.forEach(f => {
+
+        // 🔒 GARANTIA EXTRA: só Jaraguá do Sul
+        if (
+            f.properties.city !== "Jaraguá do Sul" &&
+            f.properties.county !== "Jaraguá do Sul"
+        ) return;
+
         const div = document.createElement("div");
         div.textContent = f.properties.formatted;
 
@@ -43,6 +51,7 @@ async function buscarEndereco(texto, container, onSelect) {
         container.appendChild(div);
     });
 }
+
 
 // ===== INPUTS =====
 const origemInput = document.getElementById("origem");
@@ -139,4 +148,5 @@ function aguardarMotorista() {
         }
     }, 3000);
 }
+
 
