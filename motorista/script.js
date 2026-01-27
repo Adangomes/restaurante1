@@ -1,6 +1,6 @@
 // ===== MOTORISTAS CADASTRADOS =====
 const motoristas = [{
-    nome: "Adan Gomes",
+    nome: "Joao Ferreira",
     senha: "1234",
     carro: "HB20 Branco",
     placa: "ABC-1A23"
@@ -9,23 +9,23 @@ const motoristas = [{
 let motoristaLogado = null;
 let corridaAtual = null;
 let online = false;
+let escutaInterval = null;
 
 // ===== LOGIN =====
 function login() {
     const nome = document.getElementById("nomeLogin").value;
     const senha = document.getElementById("senhaLogin").value;
 
-    const encontrado = motoristas.find(m => m.nome === nome && m.senha === senha);
+    const encontrado = motoristas.find(
+        m => m.nome === nome && m.senha === senha
+    );
 
     if (!encontrado) {
         alert("Nome ou senha inválidos");
         return;
     }
 
-    motoristaLogado = {
-        ...encontrado,
-        localizacao: null
-    };
+    motoristaLogado = { ...encontrado, localizacao: null };
 
     document.getElementById("login").classList.add("hidden");
     document.getElementById("app").classList.remove("hidden");
@@ -43,17 +43,19 @@ statusBtn.onclick = () => {
     statusBtn.className = online ? "online" : "offline";
 
     if (online) {
-        escutarCorridas();
-        iniciarLocalizacao();
+        iniciarEscuta();
     } else {
+        pararEscuta();
         corridaBox.classList.add("hidden");
     }
 };
 
-// ===== ESCUTA CORRIDAS =====
-function escutarCorridas() {
-    setInterval(() => {
-        if (!online) return;
+// ===== ESCUTAR CORRIDAS =====
+function iniciarEscuta() {
+    if (escutaInterval) return;
+
+    escutaInterval = setInterval(() => {
+        if (!online || corridaAtual) return;
 
         const corrida = JSON.parse(localStorage.getItem("corrida"));
 
@@ -62,6 +64,11 @@ function escutarCorridas() {
             mostrarCorrida(corrida);
         }
     }, 2000);
+}
+
+function pararEscuta() {
+    clearInterval(escutaInterval);
+    escutaInterval = null;
 }
 
 // ===== MOSTRAR CORRIDA =====
@@ -76,11 +83,15 @@ function mostrarCorrida(c) {
 
 // ===== ACEITAR =====
 function aceitarCorrida() {
+    if (!corridaAtual) return;
+
     corridaAtual.status = "aceita";
     corridaAtual.motorista = motoristaLogado;
 
     localStorage.setItem("corrida", JSON.stringify(corridaAtual));
+
     corridaBox.classList.add("hidden");
+    iniciarLocalizacao();
 }
 
 // ===== RECUSAR =====
@@ -91,8 +102,10 @@ function recusarCorrida() {
 
 // ===== LOCALIZAÇÃO DO MOTORISTA =====
 function iniciarLocalizacao() {
+    if (!navigator.geolocation) return;
+
     navigator.geolocation.watchPosition(pos => {
-        if (!corridaAtual) return;
+        if (!corridaAtual || corridaAtual.status !== "aceita") return;
 
         motoristaLogado.localizacao = {
             lat: pos.coords.latitude,
@@ -103,4 +116,3 @@ function iniciarLocalizacao() {
         localStorage.setItem("corrida", JSON.stringify(corridaAtual));
     });
 }
-
