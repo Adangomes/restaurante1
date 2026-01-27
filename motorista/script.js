@@ -1,6 +1,6 @@
 // ===== MOTORISTAS CADASTRADOS =====
 const motoristas = [{
-    nome: "Joao Ferreira",
+    nome: "Adan Gomes",
     senha: "1234",
     carro: "HB20 Branco",
     placa: "ABC-1A23"
@@ -103,3 +103,4 @@ function iniciarLocalizacao() {
         localStorage.setItem("corrida", JSON.stringify(corridaAtual));
     });
 }
+
