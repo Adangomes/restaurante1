@@ -11,17 +11,28 @@ let corridaAtual = null;
 let online = false;
 let escutaInterval = null;
 
+// ===== NORMALIZA STRING =====
+function normalize(str) {
+    return str
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim()
+        .toLowerCase();
+}
+
 // ===== LOGIN =====
 function login() {
-    const nome = document.getElementById("nomeLogin").value;
-    const senha = document.getElementById("senhaLogin").value;
+    const nomeInput = document.getElementById("nomeLogin").value;
+    const senhaInput = document.getElementById("senhaLogin").value.trim();
 
-    const encontrado = motoristas.find(
-        m => m.nome === nome && m.senha === senha
+    const nome = normalize(nomeInput);
+
+    const encontrado = motoristas.find(m =>
+        normalize(m.nome) === nome && m.senha === senhaInput
     );
 
     if (!encontrado) {
-        alert("Nome ou senha inválidos");
+        alert("Usuário ou senha inválidos");
         return;
     }
 
@@ -47,6 +58,7 @@ statusBtn.onclick = () => {
     } else {
         pararEscuta();
         corridaBox.classList.add("hidden");
+        corridaAtual = null;
     }
 };
 
@@ -81,7 +93,7 @@ function mostrarCorrida(c) {
     document.getElementById("valor").innerText = "R$ " + c.valor.toFixed(2);
 }
 
-// ===== ACEITAR =====
+// ===== ACEITAR CORRIDA =====
 function aceitarCorrida() {
     if (!corridaAtual) return;
 
@@ -100,7 +112,7 @@ function recusarCorrida() {
     corridaAtual = null;
 }
 
-// ===== LOCALIZAÇÃO DO MOTORISTA =====
+// ===== LOCALIZAÇÃO =====
 function iniciarLocalizacao() {
     if (!navigator.geolocation) return;
 
