@@ -40,7 +40,7 @@ async function buscarEndereco(texto, container, onSelect) {
             const cityName = normalizeString(f.properties.city || "");
             const countyName = normalizeString(f.properties.county || "");
 
-            if (cityName !== "jaragua do sul" && countyName !== "jaragua do sul") return;
+           if (!cityName.includes("jaragua do sul") && !countyName.includes("jaragua do sul")) return;
 
             const div = document.createElement("div");
             div.textContent = f.properties.formatted;
@@ -161,3 +161,4 @@ function aguardarMotorista() {
         }
     }, 3000);
 }
+
