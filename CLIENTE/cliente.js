@@ -1,8 +1,4 @@
-const GEOAPIFY_KEY = "208f6874a48c45e68761f3d994db6775";
-// 🔑 COLOQUE SUA API KEY DO GEOAPIFY AQUI
-
 console.log("cliente.js carregou");
-
 
 let origemCoord = null;
 let destinoCoord = null;
@@ -12,23 +8,23 @@ let valorCorrida = 0;
 let origemSelecionada = false;
 let destinoSelecionado = false;
 
+// 📍 AUTOCOMPLETE DE ENDEREÇOS (JARAGUÁ DO SUL)
 async function buscarEndereco(texto, container, onSelect) {
     if (texto.length < 2) {
         container.innerHTML = "";
         return;
     }
 
-    console.log("Buscando:", texto);
+    const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(
+        texto
+    )}&bias=proximity:-49.0716,-26.4851&limit=5&apiKey=${GEOAPIFY_KEY}`;
 
-    const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(texto)}&city=Jaraguá do Sul&country=Brazil&limit=5&apiKey=${GEOAPIFY_KEY}`;
     const res = await fetch(url);
     const data = await res.json();
 
-    console.log("Resultado:", data);
-
     container.innerHTML = "";
 
-    if (!data.features) return;
+    if (!data.features || !data.features.length) return;
 
     data.features.forEach(f => {
         const div = document.createElement("div");
@@ -42,8 +38,6 @@ async function buscarEndereco(texto, container, onSelect) {
         container.appendChild(div);
     });
 }
-
-
 
 // ===== INPUTS =====
 const origemInput = document.getElementById("origem");
@@ -76,11 +70,12 @@ destinoInput.addEventListener("input", () => {
     });
 });
 
-// ===== CALCULA DISTÂNCIA =====
+// ===== CALCULAR DISTÂNCIA / TEMPO / VALOR =====
 async function calcularCorrida() {
     if (!origemCoord || !destinoCoord) return;
 
     const url = `https://api.geoapify.com/v1/routing?waypoints=${origemCoord[1]},${origemCoord[0]}|${destinoCoord[1]},${destinoCoord[0]}&mode=drive&apiKey=${GEOAPIFY_KEY}`;
+
     const res = await fetch(url);
     const data = await res.json();
 
@@ -88,13 +83,9 @@ async function calcularCorrida() {
 
     const rota = data.features[0].properties;
 
-    const metros = rota.distance;
-    const segundos = rota.time;
+    distanciaKM = (rota.distance / 1000).toFixed(2);
+    const minutos = Math.ceil(rota.time / 60);
 
-    distanciaKM = (metros / 1000).toFixed(2);
-    const minutos = Math.ceil(segundos / 60);
-
-    // 💰 tarifa
     valorCorrida = 5 + distanciaKM * 1;
 
     document.getElementById("distancia").innerText = `${distanciaKM} km`;
@@ -102,17 +93,10 @@ async function calcularCorrida() {
     document.getElementById("valor").innerText = `R$ ${valorCorrida.toFixed(2)}`;
 }
 
-
 // ===== SOLICITAR CORRIDA =====
 function solicitarCorrida() {
-
     if (!origemSelecionada || !destinoSelecionado) {
         alert("Selecione ruas válidas em Jaraguá do Sul");
-        return;
-    }
-
-    if (!origemCoord || !destinoCoord || distanciaKM <= 0) {
-        alert("Não foi possível calcular a rota");
         return;
     }
 
@@ -140,31 +124,13 @@ function aguardarMotorista() {
     setInterval(() => {
         const corrida = JSON.parse(localStorage.getItem("corrida"));
 
-        if (corrida ? .status === "aceita") {
+        if (corrida && corrida.status === "aceita") {
             document.getElementById("aguardando").classList.add("hidden");
             document.getElementById("motoristaAceitou").classList.remove("hidden");
 
             document.getElementById("mNome").innerText = corrida.motorista.nome;
             document.getElementById("mCarro").innerText = corrida.motorista.carro;
             document.getElementById("mPlaca").innerText = corrida.motorista.placa;
-
-            if (corrida.motorista.localizacao) {
-                calcularTempoMotorista(corrida.motorista.localizacao);
-            }
         }
     }, 3000);
 }
-
-// ===== TEMPO DO MOTORISTA =====
-async function calcularTempoMotorista(loc) {
-    const url = `https://api.geoapify.com/v1/routing?waypoints=${loc.lat},${loc.lon}|${origemCoord[1]},${origemCoord[0]}&mode=drive&apiKey=${GEOAPIFY_KEY}`;
-    const res = await fetch(url);
-    const data = await res.json();
-
-    const minutos = Math.ceil(data.features[0].properties.time / 60);
-    document.getElementById("tempo").innerText = minutos + " min";
-}
-
-fetch("https://api.geoapify.com/v1/geocode/autocomplete?text=Rua%20Cruzeiro&city=Jaraguá%20do%20Sul&country=Brazil&limit=5&apiKey=SUA_API_KEY")
-.then(r => r.json())
-.then(d => console.log(d))
