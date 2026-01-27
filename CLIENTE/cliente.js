@@ -1,8 +1,5 @@
 const GEOAPIFY_KEY = "208f6874a48c45e68761f3d994db6775";
 
-
-
-
 console.log("cliente.js carregou");
 
 let origemCoord = null;
@@ -13,8 +10,14 @@ let valorCorrida = 0;
 let origemSelecionada = false;
 let destinoSelecionado = false;
 
+let motoristaInterval = null;
 
-// AQUI VAI LIMITAR SO JARAGUA DO SUL
+// ===== FUNÇÃO DE NORMALIZAÇÃO (ACENTOS) =====
+function normalizeString(str) {
+    return str ? str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() : "";
+}
+
+// ===== BUSCAR ENDEREÇO =====
 async function buscarEndereco(texto, container, onSelect) {
     if (texto.length < 2) {
         container.innerHTML = "";
@@ -23,35 +26,36 @@ async function buscarEndereco(texto, container, onSelect) {
 
     const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(
         texto
-    )}&filter=city:Jaraguá do Sul&country=BR&limit=5&apiKey=${GEOAPIFY_KEY}`;
+    )}&filter=countrycode:br&limit=5&apiKey=${GEOAPIFY_KEY}`;
 
-    const res = await fetch(url);
-    const data = await res.json();
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
 
-    container.innerHTML = "";
+        container.innerHTML = "";
 
-    if (!data.features || !data.features.length) return;
+        if (!data.features || !data.features.length) return;
 
-    data.features.forEach(f => {
+        data.features.forEach(f => {
+            const cityName = normalizeString(f.properties.city || "");
+            const countyName = normalizeString(f.properties.county || "");
 
-        // 🔒 GARANTIA EXTRA: só Jaraguá do Sul
-        if (
-            f.properties.city !== "Jaraguá do Sul" &&
-            f.properties.county !== "Jaraguá do Sul"
-        ) return;
+            if (cityName !== "jaragua do sul" && countyName !== "jaragua do sul") return;
 
-        const div = document.createElement("div");
-        div.textContent = f.properties.formatted;
+            const div = document.createElement("div");
+            div.textContent = f.properties.formatted;
 
-        div.onclick = () => {
-            onSelect(f);
-            container.innerHTML = "";
-        };
+            div.onclick = () => {
+                onSelect(f);
+                container.innerHTML = "";
+            };
 
-        container.appendChild(div);
-    });
+            container.appendChild(div);
+        });
+    } catch (err) {
+        console.error("Erro ao buscar endereço:", err);
+    }
 }
-
 
 // ===== INPUTS =====
 const origemInput = document.getElementById("origem");
@@ -90,21 +94,25 @@ async function calcularCorrida() {
 
     const url = `https://api.geoapify.com/v1/routing?waypoints=${origemCoord[1]},${origemCoord[0]}|${destinoCoord[1]},${destinoCoord[0]}&mode=drive&apiKey=${GEOAPIFY_KEY}`;
 
-    const res = await fetch(url);
-    const data = await res.json();
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
 
-    if (!data.features || !data.features.length) return;
+        if (!data.features || !data.features.length) return;
 
-    const rota = data.features[0].properties;
+        const rota = data.features[0].properties;
 
-    distanciaKM = (rota.distance / 1000).toFixed(2);
-    const minutos = Math.ceil(rota.time / 60);
+        distanciaKM = (rota.distance / 1000).toFixed(2);
+        const minutos = Math.ceil(rota.time / 60);
 
-    valorCorrida = 5 + distanciaKM * 1;
+        valorCorrida = 5 + distanciaKM * 1; // R$5 + R$1 por km
 
-    document.getElementById("distancia").innerText = `${distanciaKM} km`;
-    document.getElementById("tempoViagem").innerText = `${minutos} min`;
-    document.getElementById("valor").innerText = `R$ ${valorCorrida.toFixed(2)}`;
+        document.getElementById("distancia").innerText = `${distanciaKM} km`;
+        document.getElementById("tempoViagem").innerText = `${minutos} min`;
+        document.getElementById("valor").innerText = `R$ ${valorCorrida.toFixed(2)}`;
+    } catch (err) {
+        console.error("Erro ao calcular corrida:", err);
+    }
 }
 
 // ===== SOLICITAR CORRIDA =====
@@ -135,18 +143,21 @@ function solicitarCorrida() {
 
 // ===== ESCUTA MOTORISTA =====
 function aguardarMotorista() {
-    setInterval(() => {
+    if (motoristaInterval) clearInterval(motoristaInterval);
+
+    motoristaInterval = setInterval(() => {
         const corrida = JSON.parse(localStorage.getItem("corrida"));
 
         if (corrida && corrida.status === "aceita") {
+            clearInterval(motoristaInterval);
+
             document.getElementById("aguardando").classList.add("hidden");
             document.getElementById("motoristaAceitou").classList.remove("hidden");
 
             document.getElementById("mNome").innerText = corrida.motorista.nome;
             document.getElementById("mCarro").innerText = corrida.motorista.carro;
             document.getElementById("mPlaca").innerText = corrida.motorista.placa;
+            document.getElementById("tempo").innerText = "5"; // opcional: minutos estimados
         }
     }, 3000);
 }
-
-
