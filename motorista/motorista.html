@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Motorista | MYDI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- LOGIN -->
+    <section id="login">
+        <h3>🔐 Login do Motorista</h3>
+        <input type="text" id="nomeLogin" placeholder="Nome">
+        <input type="password" id="senhaLogin" placeholder="Senha">
+        <button onclick="login()">ENTRAR</button>
+    </section>
+
+    <!-- APP -->
+    <div id="app" class="hidden">
+
+        <header>
+            <h2 id="motoristaNome"></h2>
+            <button id="statusBtn" class="offline">🔴 OFFLINE</button>
+        </header>
+
+        <section id="corrida" class="hidden">
+            <h3>🚕 Corrida disponível</h3>
+            <p><strong>Origem:</strong> <span id="origemTxt"></span></p>
+            <p><strong>Destino:</strong> <span id="destinoTxt"></span></p>
+            <p>📏 <span id="distancia"></span></p>
+            <p>💰 <span id="valor"></span></p>
+
+            <div class="acoes">
+                <button class="aceitar" onclick="aceitarCorrida()">ACEITAR</button>
+                <button class="recusar" onclick="recusarCorrida()">RECUSAR</button>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
