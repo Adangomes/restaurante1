@@ -164,3 +164,7 @@ async function calcularTempoMotorista(loc) {
     const minutos = Math.ceil(data.features[0].properties.time / 60);
     document.getElementById("tempo").innerText = minutos + " min";
 }
+
+fetch("https://api.geoapify.com/v1/geocode/autocomplete?text=Rua%20Cruzeiro&city=Jaraguá%20do%20Sul&country=Brazil&limit=5&apiKey=SUA_API_KEY")
+.then(r => r.json())
+.then(d => console.log(d))
