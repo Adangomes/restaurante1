@@ -84,14 +84,24 @@ async function calcularCorrida() {
     const res = await fetch(url);
     const data = await res.json();
 
-    const metros = data.features[0].properties.distance;
-    distanciaKM = (metros / 1000).toFixed(2);
+    if (!data.features || !data.features.length) return;
 
+    const rota = data.features[0].properties;
+
+    const metros = rota.distance;
+    const segundos = rota.time;
+
+    distanciaKM = (metros / 1000).toFixed(2);
+    const minutos = Math.ceil(segundos / 60);
+
+    // 💰 tarifa
     valorCorrida = 5 + distanciaKM * 1;
 
-    document.getElementById("distancia").innerText = distanciaKM + " km";
-    document.getElementById("valor").innerText = "R$ " + valorCorrida.toFixed(2);
+    document.getElementById("distancia").innerText = `${distanciaKM} km`;
+    document.getElementById("tempoViagem").innerText = `${minutos} min`;
+    document.getElementById("valor").innerText = `R$ ${valorCorrida.toFixed(2)}`;
 }
+
 
 // ===== SOLICITAR CORRIDA =====
 function solicitarCorrida() {
