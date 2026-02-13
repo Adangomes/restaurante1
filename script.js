@@ -399,32 +399,20 @@ function voltarParaDados() {
 function mostrarToast() {
     let toast = document.getElementById("toast");
 
-    // Se não existir, cria automaticamente
     if (!toast) {
         toast = document.createElement("div");
         toast.id = "toast";
+        toast.className = "toast"; // 🔥 USA A CLASSE DO CSS
         toast.innerText = "Produto adicionado ao carrinho!";
-        toast.style.position = "fixed";
-        toast.style.bottom = "30px";
-        toast.style.right = "30px";
-        toast.style.background = "#111";
-        toast.style.color = "#fff";
-        toast.style.padding = "12px 18px";
-        toast.style.borderRadius = "8px";
-        toast.style.boxShadow = "0 5px 15px rgba(0,0,0,0.3)";
-        toast.style.zIndex = "9999";
-        toast.style.opacity = "0";
-        toast.style.transition = "0.3s";
         document.body.appendChild(toast);
     }
 
-    toast.style.opacity = "1";
+    toast.classList.add("show");
 
     setTimeout(() => {
-        toast.style.opacity = "0";
+        toast.classList.remove("show");
     }, 2000);
 }
-
 
 
 
