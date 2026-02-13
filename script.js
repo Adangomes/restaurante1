@@ -338,7 +338,7 @@ async function finalizarEntrega() {
     // ===============================
     try {
 
-        await db.ref('pedidos').push({
+        await db.ref('kings/pedidos').push({
             cliente: nomeCli,
             cidade: cidadeCli,
             endereco: `${ruaCli}, ${numCli} - ${bairroCli}`,
