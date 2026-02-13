@@ -4,14 +4,14 @@
             "price": 23.99,
             "categoria": "burger",
             "ingredientes": "Hambúrguer artesanal 140g, duas fatias de queijo e pão brioche",
-            "image": "/imagens/kingstradicional.jpg"
+            "image": "/imagens/kingstradicional.jpeg"
         },
         {
             "title": "Kings Duplo Bacon",
             "price": 34.99,
             "categoria": "burger",
             "ingredientes": "Dois hambúrgueres artesanais de 140g cada, queijo derretido, bacon crocante e pão brioche",
-            "image": "/imagens/kingsduplo.jpg"
+            "image": "/imagens/kingsduplo.jpeg"
         },
         {
             "title": "Kings Calabresa",
@@ -49,4 +49,5 @@
             "ingredientes": "hamburguer artesanal 140g, queijo prato, pão brioche"
         }
     ]
+
 }
