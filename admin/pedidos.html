@@ -169,7 +169,7 @@
         });
 
         function imprimir(tipo, id) {
-            db.ref('pedidos/' + id).once('value', s => {
+            db.ref('kings/pedidos/' + id).once('value', s => {
                 const p = s.val();
                 let lista = Array.isArray(p.itens) ? p.itens.map(i => `${i.qtd}x ${i.produto}`).join('<br>') : "";
 
@@ -253,4 +253,5 @@
 
 
 </html>
+
 
