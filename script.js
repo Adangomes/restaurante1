@@ -376,7 +376,6 @@ document.addEventListener("DOMContentLoaded", () => {
     initMenu(); 
     carregarStatusLoja();
     carregarProdutos();
-    carregarPromocao();
     carregarBebidas(); 
     carregarCarrinhoStorage();
 });
