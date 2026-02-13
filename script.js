@@ -384,36 +384,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-// 6. ADICIONAR AO CARRINHO COM AGRUPAMENTO
-document.getElementById("btn-adicionar-pizza").onclick = () => {
-    if (saboresSelecionados.length < limiteSabores) {
-        alert(`Selecione as ${limiteSabores} fatias para completar sua pizza!`);
-        return;
-    }
 
-    // Agrupa nomes: ["Calabresa", "Calabresa", "Frango"] -> "2x Calabresa / 1x Frango"
-    const contagem = {};
-    saboresSelecionados.forEach(s => contagem[s] = (contagem[s] || 0) + 1);
-    
-    const resumoSabores = Object.entries(contagem)
-        .map(([nome, qtd]) => `${qtd}x ${nome}`)
-        .join(" / ");
 
-    const nomeFinal = `Pizza ${tamanhoSelecionado}: ${resumoSabores}`;
-    const precoFinal = pizzaPrincipal.prices[tamanhoSelecionado];
-
-    carrinho.push({
-        title: nomeFinal,
-        price: precoFinal,
-        qtd: 1,
-        categoria: "pizza"
-    });
-
-    salvarCarrinho();
-    atualizarCarrinho();
-    fecharModalPizza();
-    if(typeof mostrarToast === "function") mostrarToast();
-};
+  
 
 
 
