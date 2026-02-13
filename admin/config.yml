@@ -1,0 +1,48 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "imagens"
+public_folder: "/imagens"
+
+collections:
+  - name: "cardapio"
+    label: "Cardápio Completo"
+    files:
+      - file: "content/produtos.json"
+        label: "Categorias de Produtos"
+        name: "produtos_config"
+        fields:
+          - label: "Lista Geral de Produtos"
+            name: "produtos"
+            widget: "list"
+            summary: '{{title}} ({{categoria}})'
+            fields:
+              - { label: "Nome", name: "title", widget: "string" }
+              - { 
+                  label: "Categoria", 
+                  name: "categoria", 
+                  widget: "select", 
+                  options: ["burger", "bebida", "pizza", "porcao", "dog", "parmediana"] 
+                }
+              - { label: "Ingredientes/Descrição", name: "ingredientes", widget: "text" }
+              - { label: "Imagem", name: "image", widget: "image" }
+              - { label: "Preço Único (Burger/Dog/Bebida/Parmediana)", name: "price", widget: "number", value_type: "float", required: false }
+              - label: "Preços por Tamanho (Pizza/Porção)"
+                name: "prices"
+                widget: "object"
+                required: false
+                fields:
+                  - { label: "Pequena / 600g", name: "P", widget: "number", value_type: "float", required: false }
+                  - { label: "Média (Só Pizza)", name: "M", widget: "number", value_type: "float", required: false }
+                  - { label: "Grande / 1kg", name: "G", widget: "number", value_type: "float", required: false }
+
+  - name: "configuracoes"
+    label: "Configurações da Loja"
+    files:
+      - file: "content/status.json"
+        label: "Status da Loja"
+        name: "status_loja"
+        fields:
+          - { label: "Loja Aberta?", name: "aberto", widget: "boolean", default: true }
+          - { label: "Mensagem Fechado", name: "mensagem", widget: "string" }
