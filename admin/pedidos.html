@@ -126,7 +126,7 @@
             }).catch(() => alert("Arquivo alert.mpeg não encontrado!"));
         }
 
-        db.ref('pedidos').on('child_added', (snap) => {
+        db.ref('kings/pedidos').on('child_added', (snap) => {
             const p = snap.val();
             const id = snap.key;
             const li = document.createElement('li');
@@ -253,3 +253,4 @@
 
 
 </html>
+
