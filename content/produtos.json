@@ -18,7 +18,7 @@
             "price": 31.99,
             "categoria": "burger",
             "ingredientes": "Hambúrguer artesanal 140g, calabresa grelhada, queijo e pão brioche",
-            "image": "/imagens/kingscalabresa.jpg"
+            "image": "/imagens/kingscalabresa.jpeg"
         },
         {
             "title": "Coca-Cola Lata",
@@ -42,7 +42,7 @@
             "image": "/imagens/16F3F6E1-7CC0-4093-9723-96310FC8EED8.jpeg"
         },
         {
-            "image": "/imagens/kingsclassic.jpg",
+            "image": "/imagens/kingsclassic.jpeg",
             "title": "kings burger classic",
             "price": 28.99,
             "categoria": "burger",
@@ -51,3 +51,4 @@
     ]
 
 }
+
