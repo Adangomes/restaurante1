@@ -108,6 +108,7 @@
     const db = firebase.database();
 
     let prontoParaTocar = false;
+    let contadorPedidos = 0; // contador global de pedidos
 
     function ativarSomEDestravar() {
         const context = new(window.AudioContext || window.webkitAudioContext)();
@@ -119,11 +120,35 @@
     }
 
     // ===============================
+    // 🔔 CARREGAR PEDIDOS EXISTENTES
+    // ===============================
+    db.ref('kings/pedidos').once('value', snapshot => {
+        const pedidosExistentes = snapshot.val() || {};
+        const ids = Object.keys(pedidosExistentes);
+        contadorPedidos = ids.length; // número inicial de pedidos
+
+        ids.forEach(id => adicionarPedidoCard(pedidosExistentes[id], id));
+    });
+
+    // ===============================
     // 🔔 LISTENER PEDIDOS NOVOS
     // ===============================
-    db.ref('kings/pedidos').on('child_added', (snap) => {
+    db.ref('kings/pedidos').on('child_added', snap => {
         const p = snap.val();
         const id = snap.key;
+
+        // Evita duplicar pedidos existentes
+        if(document.getElementById('card-' + id)) return;
+
+        adicionarPedidoCard(p, id);
+    });
+
+    // ===============================
+    // 🔹 FUNÇÃO ADICIONAR CARD
+    // ===============================
+    function adicionarPedidoCard(p, id){
+        contadorPedidos++;
+        let numeroPedido = contadorPedidos.toString().padStart(2, '0');
 
         const li = document.createElement('li');
         li.className = 'pedido-card';
@@ -134,7 +159,7 @@
             : "Erro";
 
         li.innerHTML = `
-            <h3>${p.cliente} <span class="badge-pagamento">${p.pagamento}</span></h3>
+            <h3>Pedido: ${numeroPedido} - ${p.cliente} <span class="badge-pagamento">${p.pagamento}</span></h3>
             <div class="info"><b> Horário:</b> ${p.horario}</div>
             <div class="info"><b> Endereço:</b> ${p.endereco}</div>
             <div class="info"><b> Ref:</b> ${p.referencia || 'Não informada'}</div>
@@ -156,7 +181,7 @@
 
         document.getElementById('pedidos-container').prepend(li);
         if (prontoParaTocar) new Audio('alert.mpeg').play().catch(()=>{});
-    });
+    }
 
     // ===============================
     // 🔹 IMPRIMIR
@@ -235,6 +260,7 @@
     }
     function fecharRelatorio() { document.getElementById('modal-relatorio').style.display = 'none'; }
     function limparRelatorio() { if(confirm("Limpar todo o histórico?")) db.ref('kings/relatorios').remove().then(() => abrirRelatorio()); }
+
 </script>
 </body>
 </html>
