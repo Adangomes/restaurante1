@@ -1,4 +1,6 @@
+
 {
-    "aberto": true,
-    "mensagem": "ABERTO"
+  "aberto": true,
+  "mensagem": "ABERTO",
+  "promocaoAtiva": true
 }
