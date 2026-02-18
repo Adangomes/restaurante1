@@ -27,7 +27,8 @@ collections:
                 }
               - { label: "Ingredientes/Descrição", name: "ingredientes", widget: "text" }
               - { label: "Imagem", name: "image", widget: "image" }
-              - { label: "Preço Único", name: "price", widget: "number", value_type: "float" }
+              - { label: "Preço Atual", name: "price", widget: "number", value_type: "float" }
+              - { label: "Preço Antigo (Riscado)", name: "oldPrice", widget: "number", value_type: "float", required: false }
 
   - name: "configuracoes"
     label: "Configurações da Loja"
