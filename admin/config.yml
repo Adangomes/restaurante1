@@ -27,15 +27,7 @@ collections:
                 }
               - { label: "Ingredientes/Descrição", name: "ingredientes", widget: "text" }
               - { label: "Imagem", name: "image", widget: "image" }
-              - { label: "Preço Único (Burger/Dog/Bebida/Parmediana)", name: "price", widget: "number", value_type: "float", required: false }
-              - label: "Preços por Tamanho (Pizza/Porção)"
-                name: "prices"
-                widget: "object"
-                required: false
-                fields:
-                  - { label: "Pequena / 600g", name: "P", widget: "number", value_type: "float", required: false }
-                  - { label: "Média (Só Pizza)", name: "M", widget: "number", value_type: "float", required: false }
-                  - { label: "Grande / 1kg", name: "G", widget: "number", value_type: "float", required: false }
+              - { label: "Preço Único", name: "price", widget: "number", value_type: "float" }
 
   - name: "configuracoes"
     label: "Configurações da Loja"
@@ -45,5 +37,5 @@ collections:
         name: "status_loja"
         fields:
           - { label: "Loja Aberta?", name: "aberto", widget: "boolean", default: true }
-
+          - { label: "Ativar Promoção no App Mydi?", name: "promocaoAtiva", widget: "boolean", default: false }
           - { label: "Mensagem Fechado", name: "mensagem", widget: "string" }
