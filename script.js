@@ -375,6 +375,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initSplash(); 
     initMenu(); 
     carregarStatusLoja();
+    carregarPromocoes();
     carregarProdutos();
     carregarBebidas(); 
     carregarCarrinhoStorage();
@@ -415,7 +416,29 @@ function mostrarToast() {
 }
 
 
+// ATIVA PROMOÇAO 
+async function sincronizarPromoComPortal() {
+    try {
+        // Busca o status atualizado
+        const res = await fetch("/content/status.json?t=" + new Date().getTime());
+        const data = await res.json();
+        
+        // Verifica se o Firebase está disponível e se o campo existe
+        if (window.db && data.promocaoAtiva !== undefined) {
+            window.db.ref('lojas/snoop_lanche').update({
+                promo: data.promocaoAtiva, // Puxa o valor do seu Switch do CMS
+                nome: "SNOOP LANCHE",
+                ultimaAtualizacao: new Date().toISOString()
+            });
+            console.log("Portal Mydi Sincronizado! Promoção está:", data.promocaoAtiva);
+        }
+    } catch (e) {
+        console.error("Erro na sincronização:", e);
+    }
+}
 
+// Chama a função
+sincronizarPromoComPortal();
 
 
 
