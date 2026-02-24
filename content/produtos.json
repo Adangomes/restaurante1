@@ -5,7 +5,7 @@
       "price": 14.90,
       "categoria": "LANCHES",
       "ingredientes": "pão, queijo e presunto",
-      "image": "/imagens/misto.jpeg",
+      "image": "/imagens/mistoquente.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -14,7 +14,7 @@
       "price": 20.50,
       "categoria": "LANCHES",
       "ingredientes": "pão, bacon, cebola chapeada, queijo e presunto",
-      "image": "/imagens/misto-especial.jpeg",
+      "image": "/imagens/mistoquente.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -23,7 +23,7 @@
       "price": 16.50,
       "categoria": "LANCHES",
       "ingredientes": "pão, queijo, presunto e tomate",
-      "image": "/imagens/bauru.jpeg",
+      "image": "/imagens/mistoquente.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -32,7 +32,7 @@
       "price": 21.00,
       "categoria": "LANCHES",
       "ingredientes": "pão, hambúrguer de costela 140g, queijo e presunto",
-      "image": "/imagens/x-burguer.jpeg",
+      "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -41,7 +41,7 @@
       "price": 26.90,
       "categoria": "LANCHES",
       "ingredientes": "pão, dois hambúrgueres de costela 140g, queijo e presunto",
-      "image": "/imagens/x-burguer-duplo.jpeg",
+      "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -50,7 +50,7 @@
       "price": 24.90,
       "categoria": "LANCHES",
       "ingredientes": "pão, frango e queijo",
-      "image": "/imagens/x-tick.jpeg",
+      "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -59,7 +59,7 @@
       "price": 24.90,
       "categoria": "LANCHES",
       "ingredientes": "pão, hambúrguer de costela 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface",
-      "image": "/imagens/x-salada.jpeg",
+      "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -68,7 +68,7 @@
       "price": 27.50,
       "categoria": "LANCHES",
       "ingredientes": "pão, ovo, hambúrguer de costela 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface",
-      "image": "/imagens/x-egg.jpeg",
+      "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -77,7 +77,7 @@
       "price": 29.90,
       "categoria": "LANCHES",
       "ingredientes": "pão, frango, hambúrguer de costela 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface",
-      "image": "/imagens/x-frango.jpeg",
+      "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -86,7 +86,7 @@
       "price": 29.90,
       "categoria": "LANCHES",
       "ingredientes": "pão, calabresa, hambúrguer de costela 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface",
-      "image": "/imagens/x-calabresa.jpeg",
+      "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -95,7 +95,7 @@
       "price": 29.90,
       "categoria": "LANCHES",
       "ingredientes": "pão, coração, hambúrguer de costela 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface",
-      "image": "/imagens/x-coracao.jpeg",
+      "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -104,7 +104,7 @@
       "price": 29.90,
       "categoria": "LANCHES",
       "ingredientes": "pão, bacon, hambúrguer de costela 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface",
-      "image": "/imagens/x-bacon.jpeg",
+      "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -113,7 +113,7 @@
       "price": 29.90,
       "categoria": "LANCHES",
       "ingredientes": "pão, alcatra 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface (sem hambúrguer)",
-      "image": "/imagens/x-alcatra.jpeg",
+      "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -122,7 +122,7 @@
       "price": 29.90,
       "categoria": "LANCHES",
       "ingredientes": "pão, hambúrguer vegano, milho, ervilha, pepino, palmito, tomate e alface",
-      "image": "/imagens/x-vegano.jpeg",
+      "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -131,7 +131,7 @@
       "price": 29.90,
       "categoria": "LANCHES",
       "ingredientes": "X-Burguer acompanhado de batata frita 250g",
-      "image": "/imagens/combo-casa.jpeg",
+      "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -293,7 +293,7 @@
       "price": 16.40,
       "categoria": "HOT DOG'S",
       "ingredientes": "Pão, duas salsichas, maionese e ketchup",
-      "image": "/imagens/dog-americano.jpeg",
+      "image": "/imagens/hotdog.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -302,7 +302,7 @@
       "price": 24.90,
       "categoria": "HOT DOG'S",
       "ingredientes": "Pão, duas salsichas, purê de batata, maionese, ketchup, milho, ervilha, tomate, cebola e batata palha",
-      "image": "/imagens/dog-tradicional.jpeg",
+      "image": "/imagens/hotdog.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -311,7 +311,7 @@
       "price": 29.90,
       "categoria": "HOT DOG'S",
       "ingredientes": "Pão, duas salsichas, bacon, purê de batata, maionese, ketchup, milho, ervilha, tomate, cebola e batata palha",
-      "image": "/imagens/dog-bacon.jpeg",
+      "image": "/imagens/hotdog.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -320,7 +320,7 @@
       "price": 29.90,
       "categoria": "HOT DOG'S",
       "ingredientes": "Pão, duas salsichas, calabresa, purê de batata, maionese, ketchup, milho, ervilha, tomate, cebola e batata palha",
-      "image": "/imagens/dog-calabresa.jpeg",
+      "image": "/imagens/hotdog.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -329,7 +329,7 @@
       "price": 29.90,
       "categoria": "HOT DOG'S",
       "ingredientes": "Pão, duas salsichas, catupiry, purê de batata, maionese, ketchup, milho, ervilha, tomate, cebola e batata palha",
-      "image": "/imagens/dog-catupiry.jpeg",
+      "image": "/imagens/hotdog.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -338,7 +338,7 @@
       "price": 29.90,
       "categoria": "HOT DOG'S",
       "ingredientes": "Pão, duas salsichas, coração, purê de batata, maionese, ketchup, milho, ervilha, tomate, cebola e batata palha",
-      "image": "/imagens/dog-coracao.jpeg",
+      "image": "/imagens/hotdog.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -347,7 +347,7 @@
       "price": 29.90,
       "categoria": "HOT DOG'S",
       "ingredientes": "Pão, duas salsichas, frango, purê de batata, maionese, ketchup, milho, ervilha, tomate, cebola e batata palha",
-      "image": "/imagens/dog-frango.jpeg",
+      "image": "/imagens/hotdog.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     }
