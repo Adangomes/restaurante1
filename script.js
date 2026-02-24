@@ -1,9 +1,9 @@
 // CONFIGURAÇÕES GLOBAIS
 const GEOAPIFY_KEY = "208f6874a48c45e68761f3d994db6775";
-const RESTAURANTE_COORD = [-49.024909, -26.464334]; 
+const RESTAURANTE_COORD = [-26.4859, -49.0723];
 const TAXA_BASE = 5;
 const VALOR_POR_KM = 1.5;
-const WHATSAPP_NUMERO = "5547992745867";
+const WHATSAPP_NUMERO = "5547991861314";
 let carrinho = [];
 let produtosGeral = [];
 let taxaEntregaCalculada = 0;
