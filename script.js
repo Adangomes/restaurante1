@@ -1,12 +1,15 @@
-// CONFIGURAÇÕES GLOBAIS
+// CONFIGURAÇÕES GLOBAIS - CASA DA CERVEJA
 const GEOAPIFY_KEY = "208f6874a48c45e68761f3d994db6775";
-const RESTAURANTE_COORD = [-26.4859, -49.0723];
+const RESTAURANTE_COORD = [-26.4841, -49.0844]; // Centro de Jaraguá do Sul
 const TAXA_BASE = 5;
 const VALOR_POR_KM = 1.5;
-const WHATSAPP_NUMERO = "5547991861314";
+const WHATSAPP_NUMERO = "5547991861314"; // Verifique se este é o número da Casa da Cerveja
 let carrinho = [];
 let produtosGeral = [];
 let taxaEntregaCalculada = 0;
+let descontoAplicado = 0;
+let cupomAtivoNome = "";
+
 // Controle de Pizza e Porção
 let pizzaPrincipal = null;
 let saboresSelecionados = []; 
@@ -36,10 +39,12 @@ async function carregarCardapioCompleto() {
         const nav = document.getElementById("categorias-scroll");
         corpo.innerHTML = ""; nav.innerHTML = "";
         const categorias = {};
+        
         produtosGeral.forEach(p => {
             if (!categorias[p.categoria]) categorias[p.categoria] = [];
             categorias[p.categoria].push(p);
         });
+
         Object.keys(categorias).forEach((cat, index) => {
             const idCat = `cat-${cat.replace(/\s+/g, '-')}`;
             const link = document.createElement("a");
@@ -51,10 +56,12 @@ async function carregarCardapioCompleto() {
                 document.getElementById(idCat).scrollIntoView({ behavior: 'smooth' });
             };
             nav.appendChild(link);
+
             const section = document.createElement("section");
             section.className = "secao-categoria";
             section.id = idCat;
             section.innerHTML = `<h2 class="titulo-categoria-lista">${cat}</h2>`;
+
             categorias[cat].forEach(p => {
                 if (p.categoria.toLowerCase() === 'pizza' && !p.title.toUpperCase().includes("PIZZA")) return; 
                 if (p.categoria.toLowerCase() === 'porcao' && !p.title.toUpperCase().includes("600G") && !p.title.toUpperCase().includes("1KG")) {
@@ -111,16 +118,29 @@ function ativarScrollSpy() {
     });
 }
 
+// --- CÁLCULO DE TAXA AJUSTADO ---
 async function calcularTaxaEntrega(end) {
     try {
-        const geo = await fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(end)}&filter=rect:-49.2568,-26.5824,-48.8164,-26.3486&apiKey=${GEOAPIFY_KEY}`).then(r => r.json());
+        // Removido o filtro 'rect' para permitir localizar ruas em toda a região de Jaraguá/Guaramirim
+        const geoUrl = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(end)}&country=Brazil&state=Santa Catarina&apiKey=${GEOAPIFY_KEY}`;
+        const geo = await fetch(geoUrl).then(r => r.json());
+        
         if (!geo.features || geo.features.length === 0) return null;  
+        
         const dest = geo.features[0].geometry.coordinates;
-        const rota = await fetch(`https://api.geoapify.com/v1/routing?waypoints=${RESTAURANTE_COORD[1]},${RESTAURANTE_COORD[0]}|${dest[1]},${dest[0]}&mode=drive&apiKey=${GEOAPIFY_KEY}`).then(r => r.json());
-        if (!rota.features) return null;
+        
+        // Rota usando as coordenadas do restaurante e do destino
+        const rotaUrl = `https://api.geoapify.com/v1/routing?waypoints=${RESTAURANTE_COORD[0]},${RESTAURANTE_COORD[1]}|${dest[1]},${dest[0]}&mode=drive&apiKey=${GEOAPIFY_KEY}`;
+        const rota = await fetch(rotaUrl).then(r => r.json());
+        
+        if (!rota.features || rota.features.length === 0) return null;
+        
         const km = rota.features[0].properties.distance / 1000;
         return km < 1 ? 2.00 : TAXA_BASE + (km * VALOR_POR_KM);
-    } catch (e) { return null; }
+    } catch (e) { 
+        console.error("Erro no cálculo de taxa:", e);
+        return null; 
+    }
 }
 
 async function mostrarResumo() {
@@ -137,7 +157,7 @@ async function mostrarResumo() {
     const taxa = await calcularTaxaEntrega(enderecoCompleto);
     document.getElementById("loading-taxa").style.display = "none";
 
-    if (taxa === null) return alert("Não conseguimos localizar este endereço.");
+    if (taxa === null) return alert("Não conseguimos localizar este endereço. Verifique o nome da rua.");
 
     taxaEntregaCalculada = taxa;  
     let sub = 0; 
@@ -164,9 +184,9 @@ async function mostrarResumo() {
     document.getElementById("resumo-total").innerText = `Total: R$ ${Math.max(0, totalFinal).toFixed(2)}`;
 }
 
-// --- CONTROLE DE PIZZA (VERSÃO UNIFICADA) ---
+// --- CONTROLE DE PIZZA ---
 function abrirModalPizza(nome) {
-    if (!estaAberto()) return alert("Loja fechada no momento!"); // BLOQUEIO FECHADO
+    if (!estaAberto()) return alert("Loja fechada no momento!"); 
 
     pizzaPrincipal = produtosGeral.find(p => p.title === nome);
     if (!pizzaPrincipal) return;
@@ -274,7 +294,7 @@ function confirmarPizza() {
         carrinho.push(itemTemporarioPorcao);
         atualizarCarrinho();
         fecharModalPizza();
-        if (typeof mostrarToast === "function") mostrarToast(itemTemporarioPorcao.title);
+        mostrarToast(itemTemporarioPorcao.title);
         itemTemporarioPorcao = null;
         return;
     }
@@ -298,24 +318,17 @@ function confirmarPizza() {
     carrinho.push(itemCarrinho);
     fecharModalPizza();
     atualizarCarrinho();
-    if (typeof mostrarToast === "function") mostrarToast(`${pizzaPrincipal.title}`);
+    mostrarToast(`${pizzaPrincipal.title}`);
 }
 
 function fecharModalPizza() { document.getElementById("pizza-options-modal").style.display = "none"; }
 
 // --- FUNÇÕES GERAIS ---
 function adicionarCarrinhoPorProduto(p) {
-    if (!estaAberto()) return alert("Loja fechada!"); // BLOQUEIO FECHADO
-
-    // AJUSTE PARA NÃO AGRUPAR: Sempre faz push de um novo objeto
+    if (!estaAberto()) return alert("Loja fechada!"); 
     carrinho.push({...p, qtd: 1});
-    
     atualizarCarrinho();
-    if (typeof mostrarToast === "function") {
-        mostrarToast(p.title); 
-    } else {
-        console.log("Toast: " + p.title + " adicionado!");
-    }
+    mostrarToast(p.title); 
 }
 
 function atualizarCarrinho() {
@@ -341,7 +354,6 @@ function atualizarCarrinho() {
 
     document.getElementById("subtotal").innerText = `R$ ${total.toFixed(2)}`;
     document.getElementById("total").innerText = `R$ ${totalComDesconto.toFixed(2)}`;
-    
     localStorage.setItem("carrinho", JSON.stringify(carrinho));
 }
 
@@ -350,6 +362,7 @@ function removerItem(idx) { carrinho.splice(idx, 1); atualizarCarrinho(); }
 function abrirCarrinho() {
     if (!estaAberto()) return alert("Loja fechada!");
     document.getElementById("cart-modal").style.display = "flex";
+    verificarDisponibilidadeCupons();
 }
 
 function fecharCarrinho() { document.getElementById("cart-modal").style.display = "none"; }
@@ -367,7 +380,10 @@ async function enviarWhatsApp() {
     const rua = document.getElementById("rua").value;
     const num = document.getElementById("numero").value;
     const bairro = document.getElementById("bairro").value;
+    const obsCozinha = document.getElementById("obsCozinha").value || "Nenhuma";
+
     if(!nome || !rua || !num) return alert("Por favor, preencha os dados de entrega!");
+    
     let subtotal = 0;
     carrinho.forEach(i => subtotal += (i.price * i.qtd));  
     const totalComDesconto = (subtotal + taxaEntregaCalculada) - descontoAplicado;
@@ -379,39 +395,39 @@ async function enviarWhatsApp() {
         itens: carrinho.map(i => ({
             produto: i.title,
             qtd: i.qtd,
-            precoUn: i.price
+            precoUn: i.price,
+            detalhes: i.sabor || ""
         })),
         pagamento: pag + (troco ? ` (Troco para ${troco})` : ""),
         subtotal: subtotal,
         taxaEntrega: taxaEntregaCalculada,
         desconto: descontoAplicado, 
         total: totalComDesconto,
-        obs_cozinha: "Nenhuma"
+        obs_cozinha: obsCozinha
     };
+
     try {
-        // AJUSTE AQUI: Salvando dentro da pasta específica da loja
-        // Se for o site do Kings Burger, mude para 'pedidos/kings_burger'
-        await db.ref('pedidos/snoop_lanche').push(pedidoFirebase);
-        console.log("Pedido registrado no banco de dados com sucesso!");
+        // ENVIANDO PARA A PASTA CORRETA NO FIREBASE
+        await db.ref('pedidos/casa_da_cerveja').push(pedidoFirebase);
     } catch (e) {
-        console.error("Erro ao salvar no banco:", e);
+        console.error("Erro ao salvar no Firebase:", e);
     }
 
-    let msg = `*NOVO PEDIDO - SNOOP LANCHE*%0A%0A`;
+    let msg = `*NOVO PEDIDO - CASA DA CERVEJA*%0A%0A`;
     msg += `*Cliente:* ${nome}%0A`;
     msg += `*Endereço:* ${rua}, ${num} - ${bairro}%0A`;
     msg += `*Pagamento:* ${pag}${troco ? ' (Troco para ' + troco + ')' : ''}%0A`;
+    msg += `*Observações:* ${obsCozinha}%0A`;
     msg += `--------------------------%0A`;
     carrinho.forEach(i => {
-        msg += `• ${i.qtd}x ${i.title} (R$ ${(i.price * i.qtd).toFixed(2)})%0A`;
+        msg += `• ${i.qtd}x ${i.title}${i.sabor ? ' ('+i.sabor+')' : ''} (R$ ${(i.price * i.qtd).toFixed(2)})%0A`;
     }); 
     msg += `--------------------------%0A`;
     msg += `*Subtotal:* R$ ${subtotal.toFixed(2)}%0A`;
-    if(descontoAplicado > 0) {
-        msg += `*Cupom:* - R$ ${descontoAplicado.toFixed(2)}%0A`;
-    }    
+    if(descontoAplicado > 0) msg += `*Cupom:* - R$ ${descontoAplicado.toFixed(2)}%0A`;
     msg += `*Taxa Entrega:* R$ ${taxaEntregaCalculada.toFixed(2)}%0A`;
     msg += `*TOTAL FINAL:* R$ ${totalComDesconto.toFixed(2)}%0A`;
+    
     window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${msg}`);
 }
 
@@ -443,7 +459,7 @@ async function carregarStatusLoja() {
 
 // --- MODAL DINÂMICO DE PORÇÕES ---
 function abrirModalDinamico(tagAlvo, tituloPrincipal) {
-    if (!estaAberto()) return alert("Loja fechada!"); // BLOQUEIO FECHADO
+    if (!estaAberto()) return alert("Loja fechada!"); 
 
     const modal = document.getElementById('pizza-options-modal');
     const containerSabores = document.getElementById('lista-sabores-meia');
@@ -483,17 +499,14 @@ function abrirModalDinamico(tagAlvo, tituloPrincipal) {
 
     document.getElementById("secao-sabores").style.display = "block";
     document.getElementById("secao-adicionais").style.display = "none";
-    
     const btn = document.getElementById("btn-confirmar-pizza");
     btn.disabled = true;
     btn.innerText = "Selecione uma opção";
-    
     modal.style.display = "flex";
 }
 
 function selecionarOpcaoPorcao(titulo, preco, elementId, tituloMestre) {
     const elemento = document.getElementById(elementId);
-    
     if (elemento.classList.contains("selecionado")) {
         elemento.classList.remove("selecionado");
         document.querySelectorAll(".item-sabor-wizard").forEach(el => el.classList.remove("desabilitado"));
@@ -505,18 +518,10 @@ function selecionarOpcaoPorcao(titulo, preco, elementId, tituloMestre) {
         });
         elemento.classList.remove("desabilitado");
         elemento.classList.add("selecionado");
-        
-        itemTemporarioPorcao = { 
-            title: `${titulo} (${tituloMestre})`, 
-            price: preco, 
-            qtd: 1 
-        };
+        itemTemporarioPorcao = { title: `${titulo} (${tituloMestre})`, price: preco, qtd: 1 };
     }
     atualizarBotaoConfirmar();
 }
-
-let descontoAplicado = 0;
-let cupomAtivoNome = "";
 
 async function verificarDisponibilidadeCupons() {
     const input = document.getElementById('input-cupom');
@@ -525,26 +530,20 @@ async function verificarDisponibilidadeCupons() {
         const response = await fetch('content/aplicardesconto.json?v=' + Date.now());
         const data = await response.json();
         const temCupomAtivo = data.cupons && data.cupons.some(c => c.ativo);
-
         if (temCupomAtivo) {
-            input.placeholder = "Digite o cupom de desconto";
-            input.disabled = false;
-            btn.disabled = false;
+            input.placeholder = "Digite o cupom";
+            input.disabled = false; btn.disabled = false;
         } else {
-            input.placeholder = "Sem cupom de desconto no momento";
-            input.disabled = true;
-            btn.disabled = true;
+            input.placeholder = "Sem cupons hoje";
+            input.disabled = true; btn.disabled = true;
         }
-    } catch (e) {
-        input.placeholder = "Digite o cupom de desconto";
-    }
+    } catch (e) { input.placeholder = "Digite o cupom"; }
 }
 
 async function aplicarCupom() {
     const input = document.getElementById('input-cupom');
     const feedback = document.getElementById('msg-cupom-feedback');
     const codigoDigitado = input.value.trim().toUpperCase();
-
     if (!codigoDigitado || descontoAplicado > 0) return;
 
     try {
@@ -555,70 +554,42 @@ async function aplicarCupom() {
         if (cupom) {
             let subtotal = 0;
             carrinho.forEach(i => subtotal += (i.price * i.qtd));
-
-            if (cupom.tipo === "porcentagem") {
-                descontoAplicado = subtotal * (cupom.valor / 100);
-            } else {
-                descontoAplicado = cupom.valor;
-            }
-
+            descontoAplicado = cupom.tipo === "porcentagem" ? subtotal * (cupom.valor / 100) : cupom.valor;
             cupomAtivoNome = cupom.codigo;
-            input.classList.remove('cupom-invalido');
             input.classList.add('cupom-valido');
             input.disabled = true; 
             feedback.innerHTML = `<span style="color:#28a745">Desconto de R$ ${descontoAplicado.toFixed(2)} aplicado!</span>`;
             atualizarCarrinho(); 
         } else {
-            const placeholderOriginal = input.placeholder;
-            input.value = "";
-            input.placeholder = "CUPOM INVÁLIDO";
+            input.value = ""; input.placeholder = "CUPOM INVÁLIDO";
             input.classList.add('cupom-invalido');
-
-            setTimeout(() => {
-                input.placeholder = placeholderOriginal;
-                input.classList.remove('cupom-invalido');
-            }, 1500);
+            setTimeout(() => { input.classList.remove('cupom-invalido'); input.placeholder = "Digite o cupom"; }, 1500);
         }
-    } catch (error) {
-        console.error("Erro ao aplicar cupom", error);
-    }
+    } catch (error) { console.error("Erro ao aplicar cupom", error); }
 }
 
 document.addEventListener('click', (e) => {
     if(e.target && e.target.id === 'btn-aplicar-cupom') aplicarCupom();
 });
 
-const originalAbrirCarrinho = abrirCarrinho;
-abrirCarrinho = function() {
-    const s = document.getElementById("status-loja");
-    if (s && s.classList.contains("fechado")) return alert("Loja fechada!");
-    originalAbrirCarrinho();
-    verificarDisponibilidadeCupons();
-};
-
 function voltarParaEntrega() {
     document.getElementById("resumo-pedido").style.display = "none";
     document.getElementById("form-entrega").style.display = "block";
 }
 
+function toggleTroco(val) {
+    document.getElementById("div-troco").style.display = (val === "Dinheiro") ? "block" : "none";
+}
 
-/* ============================================================
-   FUNÇÃO DO TOAST (PARA O FINAL DO SEU SCRIPT.JS)
-   ============================================================ */
 function mostrarToast(nomeProduto) {
-    let toast = document.getElementById("toast");
+    let toast = document.getElementById("toast-geral");
     if (!toast) {
         toast = document.createElement("div");
-        toast.id = "toast";
+        toast.id = "toast-geral";
         toast.className = "toast";
         document.body.appendChild(toast);
     }
-    toast.innerText = `${nomeProduto} adicionado ao carrinho!`;
+    toast.innerText = `${nomeProduto} adicionado!`;
     toast.classList.add("show");
-    setTimeout(() => {
-        toast.classList.remove("show");
-    }, 2000);
+    setTimeout(() => { toast.classList.remove("show"); }, 2000);
 }
-
-
-
