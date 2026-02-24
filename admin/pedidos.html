@@ -3,38 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CASADACERVEJA - Admin</title>
+    <title>CASA DA CERVEJA - Admin</title>
     <link rel="stylesheet" href="admin.css">
 </head>
 <body>
-<!-- 🔐 LOGIN ADMIN -->
-<div id="login-admin" style="
-    position:fixed;
-    inset:0;
-    background:#000;
-    z-index:30000;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-">
+<div id="login-admin" style="position:fixed; inset:0; background:#000; z-index:30000; display:flex; align-items:center; justify-content:center;">
     <div style="background:#111; padding:40px; border-radius:20px; text-align:center; width:320px;">
         <h2 style="color:#ffcc00;">CASA DA CERVEJA</h2>
         <input type="password" id="senhaAdmin" placeholder="Digite a senha" style="width:100%; padding:15px; font-size:18px; border-radius:10px; border:none; margin:20px 0;">
-        <button onclick="verificarSenha()" style="
-            width:100%;
-            padding:15px;
-            font-size:18px;
-            background:#ffcc00;
-            border:none;
-            border-radius:10px;
-            font-weight:bold;
-            cursor:pointer;
-        ">ENTRAR</button>
+        <button onclick="verificarSenha()" style="width:100%; padding:15px; font-size:18px; background:#ffcc00; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">ENTRAR</button>
         <p id="erro-senha" style="color:red; display:none;">Senha incorreta</p>
     </div>
 </div>
 
-<!-- 🔊 ATIVAR SOM -->
 <div id="container-ativacao" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:10000; display:flex; align-items:center; justify-content:center;">
     <button onclick="ativarSomEDestravar()" style="padding:30px 60px; font-size:24px; background:#ffcc00; color:#000; border:none; border-radius:15px; font-weight:bold; cursor:pointer;">
         ATIVAR SOM DO SISTEMA
@@ -42,17 +23,16 @@
 </div>
 
 <header class="admin-header">
-    <h1>KINGS <span>BURGER</span></h1>
+    <h1>CASA DA <span>CERVEJA</span></h1>
     <button class="btn-relatorio" onclick="abrirRelatorio()">HISTÓRICO</button>
 </header>
 
 <ul id="pedidos-container"></ul>
 
-<!-- MODAL RELATÓRIO -->
 <div id="modal-relatorio" class="modal">
     <div class="modal-content">
         <span style="float:right; cursor:pointer; font-size:28px; color:white;" onclick="fecharRelatorio()">&times;</span>
-        <h2 style="text-align:center; color:var(--primary);">HISTÓRICO DE VENDAS</h2>
+        <h2 style="text-align:center; color:#ffcc00;">HISTÓRICO DE VENDAS</h2>
         <div class="stats-container">
             <div class="stat-box">PEDIDOS<br><b id="rel-qtd">0</b></div>
             <div class="stat-box">TOTAL VENDIDO<br><b id="rel-total">R$ 0,00</b></div>
@@ -67,7 +47,7 @@
     </div>
 </div>
 
-<iframe id="iframe-impressao"></iframe>
+<iframe id="iframe-impressao" style="display:none;"></iframe>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -76,24 +56,24 @@
     // ===============================
     // 🔐 CONFIG SENHA ADMIN
     // ===============================
-    const SENHA_ADMIN = "kings2026";
+    const SENHA_ADMIN = "cerveja2026"; // Mudei para combinar com o cliente
 
     function verificarSenha() {
         const senha = document.getElementById("senhaAdmin").value;
         if (senha === SENHA_ADMIN) {
             document.getElementById("login-admin").style.display = "none";
-            localStorage.setItem("admin_logado", "true");
+            localStorage.setItem("admin_logado_cerveja", "true");
         } else {
             document.getElementById("erro-senha").style.display = "block";
         }
     }
 
-    if (localStorage.getItem("admin_logado") === "true") {
+    if (localStorage.getItem("admin_logado_cerveja") === "true") {
         document.getElementById("login-admin").style.display = "none";
     }
 
     // ===============================
-    // 🔹 FIREBASE
+    // 🔹 FIREBASE CONFIG
     // ===============================
     const firebaseConfig = {
         apiKey: "AIzaSyCXA1yP1F-riNkzOX5zJs5gsQ82EzsT7Qg",
@@ -107,114 +87,103 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
+    // CAMINHOS ATUALIZADOS
+    const PATH_PEDIDOS = 'pedidos/casa_da_cerveja';
+    const PATH_RELATORIOS = 'relatorios/casa_da_cerveja';
+
     let prontoParaTocar = false;
-    let contadorPedidos = 0; // contador global de pedidos
+    let contadorPedidos = 0;
 
     function ativarSomEDestravar() {
         const context = new(window.AudioContext || window.webkitAudioContext)();
         if (context.state === 'suspended') context.resume();
-        new Audio('alert.mpeg').play().then(() => {
+        const audio = new Audio('alert.mpeg');
+        audio.play().then(() => {
             prontoParaTocar = true;
             document.getElementById('container-ativacao').style.display = 'none';
-        }).catch(() => alert("Arquivo alert.mpeg não encontrado!"));
+        }).catch(() => {
+            // Se falhar, tenta apenas fechar o modal
+            prontoParaTocar = true;
+            document.getElementById('container-ativacao').style.display = 'none';
+        });
     }
 
     // ===============================
-    // 🔔 CARREGAR PEDIDOS EXISTENTES
+    // 🔔 OUVIR PEDIDOS (NOVO CAMINHO)
     // ===============================
-    db.ref('kings/pedidos').once('value', snapshot => {
-        const pedidosExistentes = snapshot.val() || {};
-        const ids = Object.keys(pedidosExistentes);
-        contadorPedidos = ids.length; // número inicial de pedidos
+    db.ref(PATH_PEDIDOS).on('value', snapshot => {
+        const pedidos = snapshot.val() || {};
+        const container = document.getElementById('pedidos-container');
+        container.innerHTML = ""; // Limpa para evitar duplicados no refresh
+        
+        const ids = Object.keys(pedidos);
+        ids.reverse().forEach(id => {
+            adicionarPedidoCard(pedidos[id], id);
+        });
 
-        ids.forEach(id => adicionarPedidoCard(pedidosExistentes[id], id));
-    });
-
-    // ===============================
-    // 🔔 LISTENER PEDIDOS NOVOS
-    // ===============================
-    db.ref('kings/pedidos').on('child_added', snap => {
-        const p = snap.val();
-        const id = snap.key;
-
-        // Evita duplicar pedidos existentes
-        if(document.getElementById('card-' + id)) return;
-
-        adicionarPedidoCard(p, id);
+        // Toca som se o número de pedidos aumentar
+        if (ids.length > contadorPedidos && prontoParaTocar) {
+            new Audio('alert.mpeg').play().catch(()=>{});
+        }
+        contadorPedidos = ids.length;
     });
 
     // ===============================
     // 🔹 FUNÇÃO ADICIONAR CARD
     // ===============================
     function adicionarPedidoCard(p, id){
-        contadorPedidos++;
-        let numeroPedido = contadorPedidos.toString().padStart(2, '0');
-
         const li = document.createElement('li');
         li.className = 'pedido-card';
         li.id = `card-${id}`;
 
         let itensHtml = Array.isArray(p.itens) 
-            ? p.itens.map(i => `• ${i.qtd}x ${i.produto} <small style="color:#888;">(R$ ${parseFloat(i.precoUn || 0).toFixed(2)})</small>`).join('<br>')
-            : "Erro";
+            ? p.itens.map(i => `• ${i.qtd}x ${i.produto} ${i.detalhes ? '<br><small>— '+i.detalhes+'</small>' : ''}`).join('<br>')
+            : "Erro nos itens";
 
         li.innerHTML = `
-            <h3>Pedido: ${numeroPedido} - ${p.cliente} <span class="badge-pagamento">${p.pagamento}</span></h3>
+            <h3>Cliente: ${p.cliente} <span class="badge-pagamento">${p.pagamento}</span></h3>
             <div class="info"><b> Horário:</b> ${p.horario}</div>
             <div class="info"><b> Endereço:</b> ${p.endereco}</div>
-            <div class="info"><b> Ref:</b> ${p.referencia || 'Não informada'}</div>
-            <div class="itens-box"><b style="color:var(--primary);"> ITENS DO PEDIDO:</b><br><div style="margin-top:5px;">${itensHtml}</div></div>
+            <div class="itens-box"><b style="color:#ffcc00;"> ITENS DO PEDIDO:</b><br><div style="margin-top:5px;">${itensHtml}</div></div>
             <div class="info-obs">OBS: ${p.obs_cozinha || 'Nenhuma'}</div>
             <div class="financeiro-box">
                 <div style="display:flex; justify-content:space-between; font-size:13px;">
-                    <span>Produtos: R$ ${parseFloat(p.subtotal).toFixed(2)}</span>
-                    <span>Taxa: R$ ${parseFloat(p.taxaEntrega).toFixed(2)}</span>
+                    <span>Subtotal: R$ ${parseFloat(p.subtotal || 0).toFixed(2)}</span>
+                    ${p.desconto > 0 ? `<span style="color:#ff4444">Cupom: -R$ ${parseFloat(p.desconto).toFixed(2)}</span>` : ''}
+                    <span>Taxa: R$ ${parseFloat(p.taxaEntrega || 0).toFixed(2)}</span>
                 </div>
-                <div class="total">TOTAL: R$ ${parseFloat(p.total).toFixed(2)}</div>
+                <div class="total">TOTAL: R$ ${parseFloat(p.total || 0).toFixed(2)}</div>
             </div>
             <div class="btn-group">
-                <button class="btn-cozinha" onclick="imprimir('cozinha', '${id}')">COZINHA</button>
-                <button class="btn-motoboy" onclick="imprimir('motoboy', '${id}')">MOTOBOY</button>
+                <button class="btn-cozinha" onclick="imprimir('producao', '${id}')">PRODUÇÃO</button>
+                <button class="btn-motoboy" onclick="imprimir('entrega', '${id}')">ENTREGA</button>
             </div>
             <button class="btn-concluir" onclick="concluirPedido('${id}')">CONCLUIR PEDIDO</button>
         `;
-
-        document.getElementById('pedidos-container').prepend(li);
-        if (prontoParaTocar) new Audio('alert.mpeg').play().catch(()=>{});
+        document.getElementById('pedidos-container').appendChild(li);
     }
 
     // ===============================
-    // 🔹 IMPRIMIR
+    // 🔹 IMPRIMIR (AJUSTADO)
     // ===============================
     function imprimir(tipo, id) {
-        db.ref('kings/pedidos/' + id).once('value', s => {
+        db.ref(PATH_PEDIDOS + '/' + id).once('value', s => {
             const p = s.val();
-            let lista = Array.isArray(p.itens) ? p.itens.map(i => `${i.qtd}x ${i.produto}`).join('<br>') : "";
+            if(!p) return;
+            let lista = Array.isArray(p.itens) ? p.itens.map(i => `${i.qtd}x ${i.produto} ${i.detalhes ? '('+i.detalhes+')' : ''}`).join('<br>') : "";
 
-            let html = (tipo==='cozinha') 
-                ? `<div style="width:72mm;font-family:Arial;text-align:center;">
-                        <h2>KINGS BURGER</h2><h3>COZINHA (${p.horario})</h3><hr>
-                        <div style="text-align:left;">
-                            <b>CLIENTE:</b> ${p.cliente}<br>
-                            <b>ITENS:</b><br>
-                            <div style="font-size:18px;font-weight:bold;">${lista}</div><hr>
-                            <b>OBS:</b> ${p.obs_cozinha || 'Nenhuma'}
-                        </div>
-                    </div>`
-                : `<div style="width:72mm;font-family:Arial;font-size:14px;">
-                        <center><h2>KINGS BURGER</h2>
-                        <b>HORÁRIO: ${p.horario}</b></center><hr>
-                        <b>CLIENTE:</b> ${p.cliente}<br>
-                        <b>ENDEREÇO:</b> ${p.endereco}<br>
-                        <b>REF:</b> ${p.referencia || 'Não informado'}<br>
-                        <b>PAGAMENTO:</b> ${p.pagamento}<br><hr>
-                        <b>PRODUTOS:</b><br>
-                        <div style="font-size:16px;font-weight:bold;">${lista}</div><br>
-                        Produtos: R$ ${parseFloat(p.subtotal || 0).toFixed(2)}<br>
-                        Taxa: R$ ${parseFloat(p.taxaEntrega || 0).toFixed(2)}<br>
-                        <b style="font-size:18px;">TOTAL: R$ ${parseFloat(p.total).toFixed(2)}</b><hr>
-                        <b>OBS:</b> ${p.obs_cozinha || 'Nenhuma'}
-                    </div>`;
+            let html = `
+                <div style="width:72mm; font-family:Arial; font-size:12px; padding:5px;">
+                    <center><h2 style="margin:0;">CASA DA CERVEJA</h2>
+                    <b>${tipo === 'producao' ? 'PEDIDO DE PRODUÇÃO' : 'COMPROVANTE DE ENTREGA'}</b><br>
+                    ${p.horario}</center><hr>
+                    <b>CLIENTE:</b> ${p.cliente}<br>
+                    ${tipo === 'entrega' ? `<b>ENDEREÇO:</b> ${p.endereco}<br><b>PAGAMENTO:</b> ${p.pagamento}<br>` : ''}
+                    <hr><b>ITENS:</b><br>
+                    <div style="font-size:14px; font-weight:bold;">${lista}</div><hr>
+                    ${tipo === 'entrega' ? `<b>TOTAL: R$ ${parseFloat(p.total).toFixed(2)}</b><hr>` : ''}
+                    <b>OBS:</b> ${p.obs_cozinha || 'Nenhuma'}
+                </div>`;
 
             const win = document.getElementById('iframe-impressao').contentWindow;
             win.document.open();
@@ -224,38 +193,33 @@
     }
 
     // ===============================
-    // ✅ CONCLUIR PEDIDO
+    // ✅ CONCLUIR PEDIDO (CORRIGIDO)
     // ===============================
-   function concluirPedido(id) {
-    if(confirm("Deseja concluir este pedido?")){
-        // Caminho onde o site do cliente está salvando os pedidos agora
-        const ref = db.ref('pedidos/casa_da_cerveja/' + id);
-
-        ref.once('value', s => {
-            const pedido = s.val();
-            if(!pedido) return; // Segurança caso o pedido já tenha sido removido
-
-            // Salva na pasta de relatórios da Casa da Cerveja antes de deletar
-            db.ref('relatorios/casa_da_cerveja').child(id).set(pedido).then(() => {
-                ref.remove().then(() => {
-                    const card = document.getElementById('card-' + id);
-                    if(card) card.remove();
-                    console.log("Pedido concluído e movido para relatórios!");
+    function concluirPedido(id) {
+        if(confirm("Deseja concluir este pedido?")){
+            const ref = db.ref(PATH_PEDIDOS + '/' + id);
+            ref.once('value', s => {
+                const pedido = s.val();
+                if(!pedido) return;
+                db.ref(PATH_RELATORIOS).child(id).set(pedido).then(() => {
+                    ref.remove();
                 });
             });
-        });
+        }
     }
-}
+
     // ===============================
-    // 📊 RELATÓRIO
+    // 📊 RELATÓRIO (CORRIGIDO)
     // ===============================
     function abrirRelatorio() {
         const t = document.getElementById('tabela-relatorio'); t.innerHTML = '';
         let soma = 0; let q = 0;
-        db.ref('kings/relatorios').once('value', s => {
+        db.ref(PATH_RELATORIOS).once('value', s => {
             s.forEach(c => {
-                const r = c.val(); soma += parseFloat(r.total); q++;
-                t.innerHTML += `<tr><td>${r.horario}</td><td>${r.cliente}</td><td>R$ ${parseFloat(r.total).toFixed(2)}</td></tr>`;
+                const r = c.val(); 
+                const val = parseFloat(r.total || 0);
+                soma += val; q++;
+                t.innerHTML += `<tr><td>${r.horario}</td><td>${r.cliente}</td><td>R$ ${val.toFixed(2)}</td></tr>`;
             });
             document.getElementById('rel-total').innerText = 'R$ ' + soma.toFixed(2);
             document.getElementById('rel-qtd').innerText = q;
@@ -263,9 +227,8 @@
         });
     }
     function fecharRelatorio() { document.getElementById('modal-relatorio').style.display = 'none'; }
-    function limparRelatorio() { if(confirm("Limpar todo o histórico?")) db.ref('kings/relatorios').remove().then(() => abrirRelatorio()); }
+    function limparRelatorio() { if(confirm("Limpar todo o histórico?")) db.ref(PATH_RELATORIOS).remove().then(() => abrirRelatorio()); }
 
 </script>
 </body>
 </html>
-
