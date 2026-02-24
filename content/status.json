@@ -1,5 +1,16 @@
 {
   "aberto": true,
   "mensagem": "ABERTO",
-  "promocaoAtiva": true
+  "promocaoAtiva": true,
+  "horaAbre": "09:00",
+  "horaFecha": "22:30",
+  "diasFuncionamento": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6"
+  ]
 }
