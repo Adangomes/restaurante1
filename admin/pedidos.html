@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KINGS BURGER - Admin</title>
+    <title>CASADACERVEJA - Admin</title>
     <link rel="stylesheet" href="admin.css">
 </head>
 <body>
@@ -18,7 +18,7 @@
     justify-content:center;
 ">
     <div style="background:#111; padding:40px; border-radius:20px; text-align:center; width:320px;">
-        <h2 style="color:#ffcc00;">KINGS BURGER</h2>
+        <h2 style="color:#ffcc00;">CASA DA CERVEJA</h2>
         <input type="password" id="senhaAdmin" placeholder="Digite a senha" style="width:100%; padding:15px; font-size:18px; border-radius:10px; border:none; margin:20px 0;">
         <button onclick="verificarSenha()" style="
             width:100%;
@@ -226,22 +226,26 @@
     // ===============================
     // ✅ CONCLUIR PEDIDO
     // ===============================
-    function concluirPedido(id) {
-        if(confirm("Deseja concluir este pedido?")){
-            const ref = db.ref('kings/pedidos/' + id);
+   function concluirPedido(id) {
+    if(confirm("Deseja concluir este pedido?")){
+        // Caminho onde o site do cliente está salvando os pedidos agora
+        const ref = db.ref('pedidos/casa_da_cerveja/' + id);
 
-            ref.once('value', s => {
-                const pedido = s.val();
-                db.ref('kings/relatorios').child(id).set(pedido).then(() => {
-                    ref.remove().then(() => {
-                        const card = document.getElementById('card-' + id);
-                        if(card) card.remove();
-                    });
+        ref.once('value', s => {
+            const pedido = s.val();
+            if(!pedido) return; // Segurança caso o pedido já tenha sido removido
+
+            // Salva na pasta de relatórios da Casa da Cerveja antes de deletar
+            db.ref('relatorios/casa_da_cerveja').child(id).set(pedido).then(() => {
+                ref.remove().then(() => {
+                    const card = document.getElementById('card-' + id);
+                    if(card) card.remove();
+                    console.log("Pedido concluído e movido para relatórios!");
                 });
             });
-        }
+        });
     }
-
+}
     // ===============================
     // 📊 RELATÓRIO
     // ===============================
@@ -264,3 +268,4 @@
 </script>
 </body>
 </html>
+
