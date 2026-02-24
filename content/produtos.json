@@ -140,7 +140,7 @@
       "price": 11.80,
       "categoria": "ESPETINHOS",
       "ingredientes": "Espetinho de Alcatra",
-      "image": "/imagens/espeto-alcatra.jpeg",
+      "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -149,7 +149,7 @@
       "price": 11.80,
       "categoria": "ESPETINHOS",
       "ingredientes": "Alcatra com linguiçinha de calabresa",
-      "image": "/imagens/espeto-mix.jpeg",
+      "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -158,7 +158,7 @@
       "price": 11.80,
       "categoria": "ESPETINHOS",
       "ingredientes": "Espetinho de Alcatra com Bacon",
-      "image": "/imagens/espeto-bacon.jpeg",
+      "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -167,7 +167,7 @@
       "price": 12.90,
       "categoria": "ESPETINHOS",
       "ingredientes": "Espetinho de Miolo de Alcatra",
-      "image": "/imagens/espeto-miolo.jpeg",
+      "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -176,7 +176,7 @@
       "price": 12.90,
       "categoria": "ESPETINHOS",
       "ingredientes": "Espetinho de Contra Filé",
-      "image": "/imagens/espeto-contra.jpeg",
+      "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -185,7 +185,7 @@
       "price": 13.80,
       "categoria": "ESPETINHOS",
       "ingredientes": "miolo da alcatra com bacon e queijo",
-      "image": "/imagens/espeto-grego.jpeg",
+      "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -194,7 +194,7 @@
       "price": 11.80,
       "categoria": "ESPETINHOS",
       "ingredientes": "Espetinho de Bananinha de Costela",
-      "image": "/imagens/espeto-bananinha.jpeg",
+      "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -203,7 +203,7 @@
       "price": 11.30,
       "categoria": "ESPETINHOS",
       "ingredientes": "Espetinho de Boi Ralado",
-      "image": "/imagens/espeto-boi.jpeg",
+      "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -212,7 +212,7 @@
       "price": 13.80,
       "categoria": "ESPETINHOS",
       "ingredientes": "recheado com queijo coalho",
-      "image": "/imagens/espeto-boi-queijo.jpeg",
+      "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -221,7 +221,7 @@
       "price": 9.60,
       "categoria": "ESPETINHOS",
       "ingredientes": "Espetinho de Calabresa",
-      "image": "/imagens/espeto-calabresa.jpeg",
+      "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -230,7 +230,7 @@
       "price": 11.80,
       "categoria": "ESPETINHOS",
       "ingredientes": "Espetinho de Coração de frango",
-      "image": "/imagens/espeto-coracao.jpeg",
+      "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -239,7 +239,7 @@
       "price": 11.80,
       "categoria": "ESPETINHOS",
       "ingredientes": "3 unidades",
-      "image": "/imagens/espeto-asa.jpeg",
+      "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -248,7 +248,7 @@
       "price": 10.10,
       "categoria": "ESPETINHOS",
       "ingredientes": "Espetinho de Frango",
-      "image": "/imagens/espeto-frango.jpeg",
+      "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -257,7 +257,7 @@
       "price": 11.80,
       "categoria": "ESPETINHOS",
       "ingredientes": "Espetinho de Linguiça Campeira",
-      "image": "/imagens/espeto-linguiça.jpeg",
+      "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -266,7 +266,7 @@
       "price": 9.60,
       "categoria": "ESPETINHOS",
       "ingredientes": "Espetinho de Queijo Coalho",
-      "image": "/imagens/espeto-queijo.jpeg",
+      "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -275,7 +275,7 @@
       "price": 8.40,
       "categoria": "ESPETINHOS",
       "ingredientes": "Pão de alho tradicional",
-      "image": "/imagens/pao-alho.jpeg",
+      "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
@@ -284,7 +284,7 @@
       "price": 13.80,
       "categoria": "ESPETINHOS",
       "ingredientes": "Espetinho de peixe Tilápia",
-      "image": "/imagens/espeto-peixe.jpeg",
+      "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
       "tem_adicionais": false
     },
