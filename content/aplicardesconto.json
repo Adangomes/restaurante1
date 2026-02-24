@@ -1,0 +1,10 @@
+{
+  "cupons": [
+    {
+      "ativo": true,
+      "codigo": "casadacerveja26",
+      "tipo": "fixo",
+      "valor": 5
+    }
+  ]
+}
