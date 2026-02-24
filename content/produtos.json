@@ -3,7 +3,7 @@
     {
       "title": "Misto quente",
       "price": 14.90,
-      "categoria": "LANCHES",
+      "categoria": "LANCHE",
       "ingredientes": "pão, queijo e presunto",
       "image": "/imagens/mistoquente.jpeg",
       "tipo_escolha": "direto",
@@ -12,7 +12,7 @@
     {
       "title": "Misto quente Especial",
       "price": 20.50,
-      "categoria": "LANCHES",
+      "categoria": "LANCHE",
       "ingredientes": "pão, bacon, cebola chapeada, queijo e presunto",
       "image": "/imagens/mistoquente.jpeg",
       "tipo_escolha": "direto",
@@ -21,7 +21,7 @@
     {
       "title": "Bauru",
       "price": 16.50,
-      "categoria": "LANCHES",
+      "categoria": "LANCHE",
       "ingredientes": "pão, queijo, presunto e tomate",
       "image": "/imagens/mistoquente.jpeg",
       "tipo_escolha": "direto",
@@ -30,7 +30,7 @@
     {
       "title": "X-Burguer",
       "price": 21.00,
-      "categoria": "LANCHES",
+      "categoria": "LANCHE",
       "ingredientes": "pão, hambúrguer de costela 140g, queijo e presunto",
       "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
@@ -39,7 +39,7 @@
     {
       "title": "X-Burguer Duplo",
       "price": 26.90,
-      "categoria": "LANCHES",
+      "categoria": "LANCHE",
       "ingredientes": "pão, dois hambúrgueres de costela 140g, queijo e presunto",
       "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
@@ -48,7 +48,7 @@
     {
       "title": "X-Tick",
       "price": 24.90,
-      "categoria": "LANCHES",
+      "categoria": "LANCHE",
       "ingredientes": "pão, frango e queijo",
       "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
@@ -57,7 +57,7 @@
     {
       "title": "X-Salada",
       "price": 24.90,
-      "categoria": "LANCHES",
+      "categoria": "LANCHE",
       "ingredientes": "pão, hambúrguer de costela 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface",
       "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
@@ -66,7 +66,7 @@
     {
       "title": "X-Egg",
       "price": 27.50,
-      "categoria": "LANCHES",
+      "categoria": "LANCHE",
       "ingredientes": "pão, ovo, hambúrguer de costela 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface",
       "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
@@ -75,7 +75,7 @@
     {
       "title": "X-Frango",
       "price": 29.90,
-      "categoria": "LANCHES",
+      "categoria": "LANCHE",
       "ingredientes": "pão, frango, hambúrguer de costela 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface",
       "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
@@ -93,7 +93,7 @@
     {
       "title": "X-Coração",
       "price": 29.90,
-      "categoria": "LANCHES",
+      "categoria": "LANCHE",
       "ingredientes": "pão, coração, hambúrguer de costela 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface",
       "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
@@ -102,7 +102,7 @@
     {
       "title": "X-Bacon",
       "price": 29.90,
-      "categoria": "LANCHES",
+      "categoria": "LANCHE",
       "ingredientes": "pão, bacon, hambúrguer de costela 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface",
       "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
@@ -111,7 +111,7 @@
     {
       "title": "X-Alcatra",
       "price": 29.90,
-      "categoria": "LANCHES",
+      "categoria": "LANCHE",
       "ingredientes": "pão, alcatra 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface (sem hambúrguer)",
       "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
@@ -120,7 +120,7 @@
     {
       "title": "X-VEGANO",
       "price": 29.90,
-      "categoria": "LANCHES",
+      "categoria": "LANCHE",
       "ingredientes": "pão, hambúrguer vegano, milho, ervilha, pepino, palmito, tomate e alface",
       "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
@@ -129,7 +129,7 @@
     {
       "title": "Combo da Casa",
       "price": 29.90,
-      "categoria": "LANCHES",
+      "categoria": "LANCHE",
       "ingredientes": "X-Burguer acompanhado de batata frita 250g",
       "image": "/imagens/xsalada.jpeg",
       "tipo_escolha": "direto",
@@ -138,7 +138,7 @@
     {
       "title": "Alcatra",
       "price": 11.80,
-      "categoria": "ESPETINHOS",
+      "categoria": "ESPETINHO",
       "ingredientes": "Espetinho de Alcatra",
       "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
@@ -147,7 +147,7 @@
     {
       "title": "Alcatra com linguiçinha",
       "price": 11.80,
-      "categoria": "ESPETINHOS",
+      "categoria": "ESPETINHO",
       "ingredientes": "Alcatra com linguiçinha de calabresa",
       "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
@@ -156,7 +156,7 @@
     {
       "title": "Alcatra com Bacon",
       "price": 11.80,
-      "categoria": "ESPETINHOS",
+      "categoria": "ESPETINHO",
       "ingredientes": "Espetinho de Alcatra com Bacon",
       "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
@@ -165,7 +165,7 @@
     {
       "title": "Miolo da Alcatra no Sal Grosso",
       "price": 12.90,
-      "categoria": "ESPETINHOS",
+      "categoria": "ESPETINHO",
       "ingredientes": "Espetinho de Miolo de Alcatra",
       "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
@@ -174,7 +174,7 @@
     {
       "title": "Contra Filé no Sal Grosso",
       "price": 12.90,
-      "categoria": "ESPETINHOS",
+      "categoria": "ESPETINHO",
       "ingredientes": "Espetinho de Contra Filé",
       "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
@@ -183,7 +183,7 @@
     {
       "title": "Grego",
       "price": 13.80,
-      "categoria": "ESPETINHOS",
+      "categoria": "ESPETINHO",
       "ingredientes": "miolo da alcatra com bacon e queijo",
       "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
@@ -192,7 +192,7 @@
     {
       "title": "Bananinha da Costela",
       "price": 11.80,
-      "categoria": "ESPETINHOS",
+      "categoria": "ESPETINHO",
       "ingredientes": "Espetinho de Bananinha de Costela",
       "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
@@ -201,7 +201,7 @@
     {
       "title": "Boi Ralado",
       "price": 11.30,
-      "categoria": "ESPETINHOS",
+      "categoria": "ESPETINHO",
       "ingredientes": "Espetinho de Boi Ralado",
       "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
@@ -210,7 +210,7 @@
     {
       "title": "Boi Ralado com Queijo",
       "price": 13.80,
-      "categoria": "ESPETINHOS",
+      "categoria": "ESPETINHO",
       "ingredientes": "recheado com queijo coalho",
       "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
@@ -219,7 +219,7 @@
     {
       "title": "Calabresa",
       "price": 9.60,
-      "categoria": "ESPETINHOS",
+      "categoria": "ESPETINHO",
       "ingredientes": "Espetinho de Calabresa",
       "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
@@ -228,7 +228,7 @@
     {
       "title": "Coração",
       "price": 11.80,
-      "categoria": "ESPETINHOS",
+      "categoria": "ESPETINHO",
       "ingredientes": "Espetinho de Coração de frango",
       "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
@@ -237,7 +237,7 @@
     {
       "title": "Meio da Asa de Frango",
       "price": 11.80,
-      "categoria": "ESPETINHOS",
+      "categoria": "ESPETINHO",
       "ingredientes": "3 unidades",
       "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
@@ -246,7 +246,7 @@
     {
       "title": "Frango",
       "price": 10.10,
-      "categoria": "ESPETINHOS",
+      "categoria": "ESPETINHO",
       "ingredientes": "Espetinho de Frango",
       "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
@@ -255,7 +255,7 @@
     {
       "title": "Linguíça Campeira",
       "price": 11.80,
-      "categoria": "ESPETINHOS",
+      "categoria": "ESPETINHO",
       "ingredientes": "Espetinho de Linguiça Campeira",
       "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
@@ -264,7 +264,7 @@
     {
       "title": "Queijo Coalho",
       "price": 9.60,
-      "categoria": "ESPETINHOS",
+      "categoria": "ESPETINHO",
       "ingredientes": "Espetinho de Queijo Coalho",
       "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
@@ -273,7 +273,7 @@
     {
       "title": "Pão de Alho",
       "price": 8.40,
-      "categoria": "ESPETINHOS",
+      "categoria": "ESPETINHO",
       "ingredientes": "Pão de alho tradicional",
       "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
@@ -282,7 +282,7 @@
     {
       "title": "Espetinho de TILÁPIA",
       "price": 13.80,
-      "categoria": "ESPETINHOS",
+      "categoria": "ESPETINHO",
       "ingredientes": "Espetinho de peixe Tilápia",
       "image": "/imagens/espetinho.jpeg",
       "tipo_escolha": "direto",
@@ -291,7 +291,7 @@
     {
       "title": "Dog Americano",
       "price": 16.40,
-      "categoria": "HOT DOG'S",
+      "categoria": "HOT DOG",
       "ingredientes": "Pão, duas salsichas, maionese e ketchup",
       "image": "/imagens/hotdog.jpeg",
       "tipo_escolha": "direto",
@@ -300,7 +300,7 @@
     {
       "title": "Dog Tradicional",
       "price": 24.90,
-      "categoria": "HOT DOG'S",
+      "categoria": "HOT DOG",
       "ingredientes": "Pão, duas salsichas, purê de batata, maionese, ketchup, milho, ervilha, tomate, cebola e batata palha",
       "image": "/imagens/hotdog.jpeg",
       "tipo_escolha": "direto",
@@ -309,7 +309,7 @@
     {
       "title": "Dog Bacon",
       "price": 29.90,
-      "categoria": "HOT DOG'S",
+      "categoria": "HOT DOG",
       "ingredientes": "Pão, duas salsichas, bacon, purê de batata, maionese, ketchup, milho, ervilha, tomate, cebola e batata palha",
       "image": "/imagens/hotdog.jpeg",
       "tipo_escolha": "direto",
@@ -318,7 +318,7 @@
     {
       "title": "Dog Calabresa",
       "price": 29.90,
-      "categoria": "HOT DOG'S",
+      "categoria": "HOT DOG",
       "ingredientes": "Pão, duas salsichas, calabresa, purê de batata, maionese, ketchup, milho, ervilha, tomate, cebola e batata palha",
       "image": "/imagens/hotdog.jpeg",
       "tipo_escolha": "direto",
@@ -327,7 +327,7 @@
     {
       "title": "Dog Catupiry",
       "price": 29.90,
-      "categoria": "HOT DOG'S",
+      "categoria": "HOT DOG",
       "ingredientes": "Pão, duas salsichas, catupiry, purê de batata, maionese, ketchup, milho, ervilha, tomate, cebola e batata palha",
       "image": "/imagens/hotdog.jpeg",
       "tipo_escolha": "direto",
@@ -336,7 +336,7 @@
     {
       "title": "Dog Coração",
       "price": 29.90,
-      "categoria": "HOT DOG'S",
+      "categoria": "HOT DOG",
       "ingredientes": "Pão, duas salsichas, coração, purê de batata, maionese, ketchup, milho, ervilha, tomate, cebola e batata palha",
       "image": "/imagens/hotdog.jpeg",
       "tipo_escolha": "direto",
@@ -345,7 +345,7 @@
     {
       "title": "Dog Frango",
       "price": 29.90,
-      "categoria": "HOT DOG'S",
+      "categoria": "HOT DOG",
       "ingredientes": "Pão, duas salsichas, frango, purê de batata, maionese, ketchup, milho, ervilha, tomate, cebola e batata palha",
       "image": "/imagens/hotdog.jpeg",
       "tipo_escolha": "direto",
