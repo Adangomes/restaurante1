@@ -1,68 +1,355 @@
 {
   "produtos": [
     {
-      "title": "Kings Burger Tradicional",
-      "price": 23.99,
-      "oldPrice": 0,
-      "categoria": "burger",
-      "ingredientes": "Hambúrguer artesanal 140g, duas fatias de queijo e pão brioche",
-      "image": "/imagens/kingstradicional.jpeg"
+      "title": "Misto quente",
+      "price": 14.90,
+      "categoria": "LANCHES",
+      "ingredientes": "pão, queijo e presunto",
+      "image": "/imagens/misto.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
     },
     {
-      "title": "Kings Duplo Bacon",
-      "price": 34.99,
-      "oldPrice": 0,
-      "categoria": "burger",
-      "ingredientes": "Dois hambúrgueres artesanais de 140g cada, queijo derretido, bacon crocante e pão brioche",
-      "image": "/imagens/kingsduplo.jpeg"
+      "title": "Misto quente Especial",
+      "price": 20.50,
+      "categoria": "LANCHES",
+      "ingredientes": "pão, bacon, cebola chapeada, queijo e presunto",
+      "image": "/imagens/misto-especial.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
     },
     {
-      "title": "Kings Calabresa",
-      "price": 31.99,
-      "oldPrice": 0,
-      "categoria": "burger",
-      "ingredientes": "Hambúrguer artesanal 140g, calabresa grelhada, queijo e pão brioche",
-      "image": "/imagens/kingscalabresa.jpeg"
+      "title": "Bauru",
+      "price": 16.50,
+      "categoria": "LANCHES",
+      "ingredientes": "pão, queijo, presunto e tomate",
+      "image": "/imagens/bauru.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
     },
     {
-      "title": "Coca-Cola Lata",
-      "price": 6.99,
-      "oldPrice": 0,
-      "categoria": "bebida",
-      "ingredientes": "350ml",
-      "image": "/imagens/cocalata.jpeg"
+      "title": "X-Burguer",
+      "price": 21.00,
+      "categoria": "LANCHES",
+      "ingredientes": "pão, hambúrguer de costela 140g, queijo e presunto",
+      "image": "/imagens/x-burguer.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
     },
     {
-      "title": "Guaraná Lata",
-      "price": 6.5,
-      "oldPrice": 0,
-      "categoria": "bebida",
-      "ingredientes": "350ml",
-      "image": "/imagens/guarana.jpeg"
+      "title": "X-Burguer Duplo",
+      "price": 26.90,
+      "categoria": "LANCHES",
+      "ingredientes": "pão, dois hambúrgueres de costela 140g, queijo e presunto",
+      "image": "/imagens/x-burguer-duplo.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
     },
     {
-      "title": "Coca-Cola 600ml",
-      "price": 8.5,
-      "oldPrice": 0,
-      "categoria": "bebida",
-      "ingredientes": "600ml",
-      "image": "/imagens/guarana.jpg"
+      "title": "X-Tick",
+      "price": 24.90,
+      "categoria": "LANCHES",
+      "ingredientes": "pão, frango e queijo",
+      "image": "/imagens/x-tick.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
     },
     {
-      "image": "/imagens/kingsclassic.jpeg",
-      "title": "kings burger classic",
-      "price": 28.99,
-      "oldPrice": 0,
-      "categoria": "burger",
-      "ingredientes": "hamburguer artesanal 140g, queijo prato, pão brioche"
+      "title": "X-Salada",
+      "price": 24.90,
+      "categoria": "LANCHES",
+      "ingredientes": "pão, hambúrguer de costela 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface",
+      "image": "/imagens/x-salada.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
     },
     {
-      "title": "Kings duplo Bacon + coca cola lata 350ml",
-      "categoria": "promocao",
-      "ingredientes": "Dois hambúrgueres artesanais de 140g cada, queijo derretido, bacon crocante e pão brioche + coca cola 350ml",
-      "image": "/imagens/kingsduplo.jpeg",
-      "price": 29.99,
-      "oldPrice": 41.98
+      "title": "X-Egg",
+      "price": 27.50,
+      "categoria": "LANCHES",
+      "ingredientes": "pão, ovo, hambúrguer de costela 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface",
+      "image": "/imagens/x-egg.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "X-Frango",
+      "price": 29.90,
+      "categoria": "LANCHES",
+      "ingredientes": "pão, frango, hambúrguer de costela 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface",
+      "image": "/imagens/x-frango.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "X-Calabresa",
+      "price": 29.90,
+      "categoria": "LANCHES",
+      "ingredientes": "pão, calabresa, hambúrguer de costela 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface",
+      "image": "/imagens/x-calabresa.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "X-Coração",
+      "price": 29.90,
+      "categoria": "LANCHES",
+      "ingredientes": "pão, coração, hambúrguer de costela 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface",
+      "image": "/imagens/x-coracao.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "X-Bacon",
+      "price": 29.90,
+      "categoria": "LANCHES",
+      "ingredientes": "pão, bacon, hambúrguer de costela 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface",
+      "image": "/imagens/x-bacon.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "X-Alcatra",
+      "price": 29.90,
+      "categoria": "LANCHES",
+      "ingredientes": "pão, alcatra 140g, queijo, presunto, milho, ervilha, pepino, palmito, tomate e alface (sem hambúrguer)",
+      "image": "/imagens/x-alcatra.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "X-VEGANO",
+      "price": 29.90,
+      "categoria": "LANCHES",
+      "ingredientes": "pão, hambúrguer vegano, milho, ervilha, pepino, palmito, tomate e alface",
+      "image": "/imagens/x-vegano.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Combo da Casa",
+      "price": 29.90,
+      "categoria": "LANCHES",
+      "ingredientes": "X-Burguer acompanhado de batata frita 250g",
+      "image": "/imagens/combo-casa.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Alcatra",
+      "price": 11.80,
+      "categoria": "ESPETINHOS",
+      "ingredientes": "Espetinho de Alcatra",
+      "image": "/imagens/espeto-alcatra.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Alcatra com linguiçinha",
+      "price": 11.80,
+      "categoria": "ESPETINHOS",
+      "ingredientes": "Alcatra com linguiçinha de calabresa",
+      "image": "/imagens/espeto-mix.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Alcatra com Bacon",
+      "price": 11.80,
+      "categoria": "ESPETINHOS",
+      "ingredientes": "Espetinho de Alcatra com Bacon",
+      "image": "/imagens/espeto-bacon.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Miolo da Alcatra no Sal Grosso",
+      "price": 12.90,
+      "categoria": "ESPETINHOS",
+      "ingredientes": "Espetinho de Miolo de Alcatra",
+      "image": "/imagens/espeto-miolo.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Contra Filé no Sal Grosso",
+      "price": 12.90,
+      "categoria": "ESPETINHOS",
+      "ingredientes": "Espetinho de Contra Filé",
+      "image": "/imagens/espeto-contra.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Grego",
+      "price": 13.80,
+      "categoria": "ESPETINHOS",
+      "ingredientes": "miolo da alcatra com bacon e queijo",
+      "image": "/imagens/espeto-grego.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Bananinha da Costela",
+      "price": 11.80,
+      "categoria": "ESPETINHOS",
+      "ingredientes": "Espetinho de Bananinha de Costela",
+      "image": "/imagens/espeto-bananinha.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Boi Ralado",
+      "price": 11.30,
+      "categoria": "ESPETINHOS",
+      "ingredientes": "Espetinho de Boi Ralado",
+      "image": "/imagens/espeto-boi.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Boi Ralado com Queijo",
+      "price": 13.80,
+      "categoria": "ESPETINHOS",
+      "ingredientes": "recheado com queijo coalho",
+      "image": "/imagens/espeto-boi-queijo.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Calabresa",
+      "price": 9.60,
+      "categoria": "ESPETINHOS",
+      "ingredientes": "Espetinho de Calabresa",
+      "image": "/imagens/espeto-calabresa.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Coração",
+      "price": 11.80,
+      "categoria": "ESPETINHOS",
+      "ingredientes": "Espetinho de Coração de frango",
+      "image": "/imagens/espeto-coracao.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Meio da Asa de Frango",
+      "price": 11.80,
+      "categoria": "ESPETINHOS",
+      "ingredientes": "3 unidades",
+      "image": "/imagens/espeto-asa.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Frango",
+      "price": 10.10,
+      "categoria": "ESPETINHOS",
+      "ingredientes": "Espetinho de Frango",
+      "image": "/imagens/espeto-frango.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Linguíça Campeira",
+      "price": 11.80,
+      "categoria": "ESPETINHOS",
+      "ingredientes": "Espetinho de Linguiça Campeira",
+      "image": "/imagens/espeto-linguiça.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Queijo Coalho",
+      "price": 9.60,
+      "categoria": "ESPETINHOS",
+      "ingredientes": "Espetinho de Queijo Coalho",
+      "image": "/imagens/espeto-queijo.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Pão de Alho",
+      "price": 8.40,
+      "categoria": "ESPETINHOS",
+      "ingredientes": "Pão de alho tradicional",
+      "image": "/imagens/pao-alho.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Espetinho de TILÁPIA",
+      "price": 13.80,
+      "categoria": "ESPETINHOS",
+      "ingredientes": "Espetinho de peixe Tilápia",
+      "image": "/imagens/espeto-peixe.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Dog Americano",
+      "price": 16.40,
+      "categoria": "HOT DOG'S",
+      "ingredientes": "Pão, duas salsichas, maionese e ketchup",
+      "image": "/imagens/dog-americano.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Dog Tradicional",
+      "price": 24.90,
+      "categoria": "HOT DOG'S",
+      "ingredientes": "Pão, duas salsichas, purê de batata, maionese, ketchup, milho, ervilha, tomate, cebola e batata palha",
+      "image": "/imagens/dog-tradicional.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Dog Bacon",
+      "price": 29.90,
+      "categoria": "HOT DOG'S",
+      "ingredientes": "Pão, duas salsichas, bacon, purê de batata, maionese, ketchup, milho, ervilha, tomate, cebola e batata palha",
+      "image": "/imagens/dog-bacon.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Dog Calabresa",
+      "price": 29.90,
+      "categoria": "HOT DOG'S",
+      "ingredientes": "Pão, duas salsichas, calabresa, purê de batata, maionese, ketchup, milho, ervilha, tomate, cebola e batata palha",
+      "image": "/imagens/dog-calabresa.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Dog Catupiry",
+      "price": 29.90,
+      "categoria": "HOT DOG'S",
+      "ingredientes": "Pão, duas salsichas, catupiry, purê de batata, maionese, ketchup, milho, ervilha, tomate, cebola e batata palha",
+      "image": "/imagens/dog-catupiry.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Dog Coração",
+      "price": 29.90,
+      "categoria": "HOT DOG'S",
+      "ingredientes": "Pão, duas salsichas, coração, purê de batata, maionese, ketchup, milho, ervilha, tomate, cebola e batata palha",
+      "image": "/imagens/dog-coracao.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
+    },
+    {
+      "title": "Dog Frango",
+      "price": 29.90,
+      "categoria": "HOT DOG'S",
+      "ingredientes": "Pão, duas salsichas, frango, purê de batata, maionese, ketchup, milho, ervilha, tomate, cebola e batata palha",
+      "image": "/imagens/dog-frango.jpeg",
+      "tipo_escolha": "direto",
+      "tem_adicionais": false
     }
   ]
 }
