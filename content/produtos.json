@@ -1,4 +1,10 @@
 {
+  "lojas": {
+    "snoop_lanche": {
+      "status": "aberto",
+      "promo": false
+    }
+  },
   "produtos": [
     {
       "title": "Misto quente",
