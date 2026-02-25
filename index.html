@@ -1,196 +1,227 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>casadacervejajgs</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaaS Cardápio Digital</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+    <style>
+        :root { --primary: #e74c3c; --dark: #2c3e50; --light: #f8f9fa; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: var(--light); padding-bottom: 100px; }
+        
+        header { background: white; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); sticky; top: 0; z-index: 100; }
+        .header-content { display: flex; align-items: center; gap: 15px; max-width: 800px; margin: 0 auto; position: relative; }
+        #loja-logo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
+        
+        .admin-btns { position: absolute; top: 0; right: 0; display: flex; gap: 10px; }
+        .btn-adm { background: none; border: none; color: #ccc; cursor: pointer; font-size: 1.2rem; }
+
+        #cardapio-corpo { max-width: 800px; margin: 20px auto; padding: 0 15px; }
+        .item-produto { background: white; margin-bottom: 15px; padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .info-p h3 { font-size: 1.1rem; }
+        .info-p p { font-size: 0.85rem; color: #777; margin: 5px 0; }
+        .preco { color: var(--primary); font-weight: 700; }
+        .foto-p img { width: 70px; height: 70px; border-radius: 10px; object-fit: cover; margin-left: 10px; }
+
+        /* Carrinho */
+        #btn-carrinho-fixo { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 15px 30px; border-radius: 40px; display: flex; gap: 20px; width: 90%; max-width: 400px; justify-content: space-between; cursor: pointer; z-index: 1000; font-weight: bold; }
+
+        /* Modais */
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:2000; align-items:center; justify-content:center; }
+        .modal-content { background:white; width:90%; max-width:500px; padding:20px; border-radius:15px; max-height: 80vh; overflow-y: auto; }
+        
+        /* Estilo Admin */
+        .area-admin { display: none; background: #eee; padding: 15px; text-align: center; border-bottom: 2px solid #ddd; }
+        .btn-add { background: #2ecc71; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-bottom: 10px; }
+        [contenteditable="true"] { border: 1px dashed var(--primary); background: #fffdfd; }
+    </style>
 </head>
 <body>
-    <div id="toast-geral" class="toast">Produto adicionado ao carrinho!</div>
-    
-    <header class="header">
-        <div class="header-top">
-            <div class="logo">CASA DA CERVEJA</div>
-            <div id="status-loja" class="status">CARREGANDO...</div>
-            <div class="cart" onclick="abrirCarrinho()">🛒</div>
+
+    <div id="area-admin" class="area-admin">
+        <button class="btn-add" onclick="adicionarNovoProduto()"><i class="fa fa-plus"></i> Novo Produto</button>
+        <button class="btn-add" style="background:#3498db" onclick="abrirPainelPedidos()"><i class="fa fa-list"></i> Ver Pedidos</button>
+    </div>
+
+    <header>
+        <div class="header-content">
+            <div class="admin-btns">
+                <button class="btn-adm" onclick="loginAdmin()"><i class="fa fa-cog"></i></button>
+            </div>
+            <img id="loja-logo" src="" alt="">
+            <div>
+                <h1 id="nome-loja">Carregando...</h1>
+                <p id="desc-loja" style="font-size: 0.8rem; color: #777;"></p>
+            </div>
         </div>
     </header>
 
-    <nav id="categorias-nav" class="categorias-nav">
-        <div id="categorias-scroll" class="categorias-scroll"></div>
-    </nav>
+    <main id="cardapio-corpo"></main>
 
-    <main id="cardapio-corpo" class="container-main"></main>
+    <div id="btn-carrinho-fixo" onclick="abrirModalCarrinho()">
+        <span><i class="fa fa-shopping-basket"></i> <span id="cart-qtd">0</span> ITENS</span>
+        <span id="cart-total">R$ 0,00</span>
+    </div>
 
-    <footer>
-        <p>Sistema Desenvolvido por Adan Gomes</p>
-    </footer>
-
-    <div id="cart-modal" class="modal-overlay" style="display:none;">
-        <div class="cart-box">
-            <div class="modal-header-clean">
-                <h3>Meu Carrinho</h3>
-                <button onclick="fecharCarrinho()" class="btn-fechar-modal" style="position: absolute; right: 15px; top: 15px;">✕</button>
+    <div id="modal-carrinho" class="modal">
+        <div class="modal-content">
+            <h2>Seu Carrinho</h2>
+            <div id="itens-carrinho-lista" style="margin: 20px 0;"></div>
+            <hr>
+            <div style="margin-top: 15px;">
+                <input type="text" id="cliente-nome" placeholder="Seu Nome" style="width:100%; padding:10px; margin-bottom:10px;">
+                <input type="text" id="cliente-end" placeholder="Endereço de Entrega" style="width:100%; padding:10px;">
             </div>
-            <div id="cart-items" class="cart-items-list"></div>
-            
-            <div class="cupom-secao">
-                <div class="cupom-container">
-                    <input type="text" id="input-cupom" placeholder="Carregando cupons...">
-                    <button id="btn-aplicar-cupom">Aplicar</button>
-                </div>
-                <div id="msg-cupom-feedback" class="cupom-msg-erro"></div>
-            </div>
-
-            <div class="summary-box">
-                <div class="summary-line">
-                    <span>Subtotal</span>
-                    <span id="subtotal">R$ 0,00</span>
-                </div>
-                <div class="summary-line total">
-                    <span>Total</span>
-                    <span id="total">R$ 0,00</span>
-                </div>
-            </div>
-
-            <div class="modal-actions">
-                <button class="btn-finalizar" onclick="abrirDelivery()">Finalizar Pedido</button>
-                <button class="btn-continuar" onclick="fecharCarrinho()">Continuar Comprando</button>
-            </div>
+            <button onclick="finalizarPedido()" style="width:100%; background:#27ae60; color:white; border:none; padding:15px; margin-top:15px; border-radius:8px; font-weight:bold;">PEDIR PELO WHATSAPP</button>
+            <button onclick="fecharModais()" style="width:100%; background:#ccc; border:none; padding:10px; margin-top:10px; border-radius:8px;">Voltar</button>
         </div>
     </div>
 
-    <div id="delivery-modal" class="modal-overlay" style="display:none;">
-        <div class="modal-box">
-            
-            <div id="form-entrega">
-                <div class="modal-header-clean">
-                    <h3>Entrega</h3>
-                    <button onclick="document.getElementById('delivery-modal').style.display='none'" class="btn-fechar-modal">✕</button>
-                </div>
-                
-                <div class="form-grid">
-                    <input type="text" id="nomeCliente" placeholder="Seu Nome">
-                    <select id="cidade">
-                        <option value="Jaraguá do Sul">Jaraguá do Sul</option>
-                        <option value="Guaramirim">Guaramirim</option>
-                        <option value="Schroeder">Schroeder</option>
-                    </select>
-                    <div class="row-inputs">
-                        <input type="text" id="rua" placeholder="Rua" style="flex: 3;">
-                        <input type="text" id="numero" placeholder="Nº" style="flex: 1;">
-                    </div>
-                    <input type="text" id="bairro" placeholder="Bairro">
-                    <textarea id="pontoReferencia" placeholder="Ponto de Referência" rows="1"></textarea>
-                    <textarea id="obsCozinha" placeholder="Observações (Sem cebola, etc)" rows="1"></textarea>
-                    <select id="pagamento" onchange="toggleTroco(this.value)">
-                        <option value="Pix">Pix</option>
-                        <option value="Dinheiro">Dinheiro</option>
-                        <option value="Cartão">Cartão</option>
-                    </select>
-                    <div id="div-troco" style="display:none;">
-                        <input type="text" id="trocoPara" placeholder="Troco para quanto?" class="w-100">
-                    </div>
-                </div>
-
-                <div class="modal-actions" style="display: flex; gap: 10px; margin-top: 15px;">
-                    <button type="button" class="btn-secundario" style="flex: 1;" onclick="document.getElementById('delivery-modal').style.display='none'; document.getElementById('cart-modal').style.display='flex';">Voltar</button>
-                    <button type="button" class="btn-whatsapp" style="flex: 1;" onclick="mostrarResumo()">Finalizar</button>
-                </div>
-            </div>
-
-            <div id="resumo-pedido" style="display:none;">
-                <div class="modal-header-clean">
-                    <h3>Resumo do Pedido</h3>
-                </div>
-                <div id="resumo-itens" class="resumo-lista"></div>
-                <div class="resumo-valores">
-                    <p id="resumo-taxa"></p>
-                    <h4 id="resumo-total"></h4>
-                </div>
-                <div class="modal-actions">
-                    <button class="btn-secundario" onclick="voltarParaEntrega()">Voltar</button>
-                    <button class="btn-whatsapp" onclick="enviarWhatsApp()">Finalizar no WhatsApp</button>
-                </div>
-            </div>
-
+    <div id="modal-pedidos" class="modal">
+        <div class="modal-content">
+            <h2>Pedidos Recebidos</h2>
+            <div id="lista-pedidos-admin" style="margin-top:20px;"></div>
+            <button onclick="fecharModais()" style="width:100%; background:var(--dark); color:white; border:none; padding:10px; margin-top:20px;">Fechar</button>
         </div>
     </div>
 
-    <div id="pizza-options-modal" class="modal-overlay" style="display:none;">
-        <div class="modal-box modal-pizza-ajustado">
-            <div class="pizza-header-img">
-                <img id="modal-pizza-img" src="" alt="">
-                <button onclick="fecharModalPizza()" class="btn-fechar-pizza">✕</button>
-            </div>
-            <div class="modal-content-pizzas">
-                <h2 id="pizza-modal-title"></h2>
-                <p id="pizza-modal-desc" class="pizza-desc"></p>
-                <label class="label-step">Quantos sabores?</label>
-                <div id="pizza-sizes-container" class="grid-tamanhos"></div>
-                
-                <div id="secao-sabores" style="display:none; margin-top: 20px;">
-                    <label id="contador-fatias" class="label-step">Escolha os Sabores</label>
-                    <div id="lista-sabores-meia" class="lista-fatias-scroll"></div>
-                </div>
-
-                <div id="secao-adicionais" style="display:none; margin-top: 20px;">
-                    <label class="label-step">Bordas e Opcionais</label>    
-                    <div class="form-group mb-3">
-                        <select id="select-borda" class="form-select">
-                            <option value="0">Sem Borda Recheada</option>
-                            <option value="10">Borda de Catupiry (+ R$ 10,00)</option>
-                            <option value="10">Borda de Cheddar (+ R$ 10,00)</option>
-                            <option value="12">Borda de Chocolate (+ R$ 12,00)</option>
-                        </select>
-                    </div>
-                    <div class="d-flex gap-3 p-2 bg-light rounded">
-                        <label style="cursor:pointer">
-                            <input type="radio" name="azeitona" value="Com Azeitona" checked> Com Azeitona
-                        </label>
-                        <label style="cursor:pointer">
-                            <input type="radio" name="azeitona" value="Sem Azeitona"> Sem Azeitona
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer-pizzas">
-                <button type="button" class="btn-voltar-modal" onclick="fecharModalPizza()">Voltar</button>
-                <button id="btn-confirmar-pizza" onclick="confirmarPizza()" disabled>Escolha o tamanho</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="loading-taxa" class="modal-overlay" style="display:none; background: rgba(255,255,255,0.8);">
-        <div class="spinner"></div>
-    </div>
-
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     <script>
+        // CONFIGURAÇÕES FIREBASE (COLE AS SUAS AQUI)
         const firebaseConfig = {
-            apiKey: "AIzaSyCXA1yP1F-riNkzOX5zJs5gsQ82EzsT7Qg",
-            authDomain: "myproject26-10f0e.firebaseapp.com",
-            databaseURL: "https://myproject26-10f0e-default-rtdb.firebaseio.com",
-            projectId: "myproject26-10f0e",
-            storageBucket: "myproject26-10f0e.firebasestorage.app",
-            messagingSenderId: "884850608032",
-            appId: "1:884850608032:web:79db6983346c3c20edc6c5"
+            apiKey: "SUA_API_KEY",
+            authDomain: "SEU_PROJETO.firebaseapp.com",
+            databaseURL: "https://SEU_PROJETO-default-rtdb.firebaseio.com",
+            projectId: "SEU_PROJETO",
+            storageBucket: "SEU_PROJETO.appspot.com",
+            messagingSenderId: "ID",
+            appId: "APP_ID"
         };
         firebase.initializeApp(firebaseConfig);
-        window.db = firebase.database();
-        
-        function sincronizarStatus() {
-            fetch('./content/status.json?v=' + Date.now())
-                .then(r => r.json())
-                .then(data => {
-                    window.db.ref('lojas/snoop_lanche').update({ promo: data.promocaoAtiva || false });
-                });
+        const db = firebase.database();
+
+        const params = new URLSearchParams(window.location.search);
+        const LOJA_ID = params.get('loja') || "snoop_lanche";
+
+        let dadosLoja = {};
+        let carrinho = [];
+
+        async function carregarDados() {
+            const snap = await db.ref(`restaurantes/${LOJA_ID}`).once('value');
+            dadosLoja = snap.val();
+            if(!dadosLoja) return alert("Loja não encontrada!");
+
+            document.getElementById('nome-loja').innerText = dadosLoja.config.nomeLoja;
+            document.getElementById('loja-logo').src = dadosLoja.config.logo;
+            renderizarCardapio();
         }
-        sincronizarStatus();
+
+        function renderizarCardapio() {
+            const corpo = document.getElementById('cardapio-corpo');
+            corpo.innerHTML = "";
+            dadosLoja.produtos?.forEach((p, idx) => {
+                corpo.innerHTML += `
+                <div class="item-produto" onclick="addCarrinho(${idx})">
+                    <div class="info-p">
+                        <h3 class="edit" data-path="produtos/${idx}/title">${p.title}</h3>
+                        <p class="edit" data-path="produtos/${idx}/ingredientes">${p.ingredientes}</p>
+                        <span class="preco">R$ <span class="edit" data-path="produtos/${idx}/price">${p.price.toFixed(2)}</span></span>
+                    </div>
+                    <div class="foto-p"><img src="${p.image}"></div>
+                </div>`;
+            });
+        }
+
+        function addCarrinho(idx) {
+            const p = dadosLoja.produtos[idx];
+            carrinho.push(p);
+            atualizarBarraCarrinho();
+        }
+
+        function atualizarBarraCarrinho() {
+            const total = carrinho.reduce((sum, i) => sum + i.price, 0);
+            document.getElementById('cart-qtd').innerText = carrinho.length;
+            document.getElementById('cart-total').innerText = `R$ ${total.toFixed(2)}`;
+        }
+
+        function abrirModalCarrinho() {
+            if(carrinho.length === 0) return alert("Carrinho vazio!");
+            const lista = document.getElementById('itens-carrinho-lista');
+            lista.innerHTML = carrinho.map(i => `<div>${i.title} - <b>R$ ${i.price.toFixed(2)}</b></div>`).join("");
+            document.getElementById('modal-carrinho').style.display = 'flex';
+        }
+
+        async function finalizarPedido() {
+            const nome = document.getElementById('cliente-nome').value;
+            const end = document.getElementById('cliente-end').value;
+            if(!nome || !end) return alert("Preencha nome e endereço!");
+
+            const total = carrinho.reduce((sum, i) => sum + i.price, 0);
+            const resumo = carrinho.map(i => i.title).join(", ");
+            
+            // 1. Salva pedido no Firebase para o dono ver no painel
+            await db.ref(`pedidos/${LOJA_ID}`).push({
+                cliente: nome, endereco: end, itens: resumo, total: total, status: 'novo'
+            });
+
+            // 2. Envia para o WhatsApp da loja específica
+            const msg = `*Novo Pedido!*%0A*Cliente:* ${nome}%0A*Itens:* ${resumo}%0A*Total:* R$ ${total.toFixed(2)}%0A*Endereço:* ${end}`;
+            window.open(`https://wa.me/${dadosLoja.config.whatsapp}?text=${msg}`);
+        }
+
+        // --- SISTEMA ADMIN ---
+        function loginAdmin() {
+            const pass = prompt("Senha Administrativa:");
+            if(pass === dadosLoja.config.senhaAdmin) {
+                document.getElementById('area-admin').style.display = 'block';
+                ativarEdicao();
+            }
+        }
+
+        function ativarEdicao() {
+            document.querySelectorAll('.edit').forEach(el => {
+                el.contentEditable = true;
+                el.onclick = (e) => e.stopPropagation(); // Não add no carrinho ao editar
+                el.onblur = async () => {
+                    const path = el.getAttribute('data-path');
+                    let val = el.innerText;
+                    if(path.includes('price')) val = parseFloat(val);
+                    await db.ref(`restaurantes/${LOJA_ID}/${path}`).set(val);
+                };
+            });
+        }
+
+        async function adicionarNovoProduto() {
+            const p = { title: "Nome do Produto", ingredientes: "Ingredientes...", price: 0.00, image: "https://via.placeholder.com/70" };
+            const lista = dadosLoja.produtos || [];
+            lista.push(p);
+            await db.ref(`restaurantes/${LOJA_ID}/produtos`).set(lista);
+            location.reload();
+        }
+
+        async function abrirPainelPedidos() {
+            const snap = await db.ref(`pedidos/${LOJA_ID}`).limitToLast(10).once('value');
+            const pedidos = snap.val();
+            const lista = document.getElementById('lista-pedidos-admin');
+            lista.innerHTML = "";
+            for(let id in pedidos) {
+                const p = pedidos[id];
+                lista.innerHTML += `<div style="border-bottom:1px solid #eee; padding:10px;">
+                    <b>${p.cliente}</b> - R$ ${p.total.toFixed(2)}<br><small>${p.itens}</small>
+                </div>`;
+            }
+            document.getElementById('modal-pedidos').style.display = 'flex';
+        }
+
+        function fecharModais() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+
+        window.onload = carregarDados;
     </script>
-    <script src="script.js"></script>
 </body>
 </html>
