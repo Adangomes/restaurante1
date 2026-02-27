@@ -1,58 +1,40 @@
-/* ============================================================
-   RESET E ESTRUTURA BASE
-   ============================================================ */
+/* RESET GERAL */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 body {
     background: #fff;
+    color: #222;
 }
 
-/* HEADER - LOGO ESQUERDA | CARRINHO DIREITA */
-.header {
+/* HEADER PRETO - IGUAL A IMAGEM */
+header {
     background: #000 !important;
-    padding: 12px 16px !important;
+    padding: 15px 16px !important;
     position: sticky;
     top: 0;
     z-index: 1100;
 }
 
-.header-top {
+.header-content {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
+    max-width: 100% !important;
 }
 
-.logo-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.logo {
+#nome-loja {
     color: #fff !important;
-    font-size: 1.1rem !important;
+    font-size: 1.2rem !important;
     font-weight: 800 !important;
     text-transform: uppercase;
 }
 
-.status {
-    font-size: 10px !important;
-    font-weight: 800 !important;
-    color: #00c853 !important; /* Verde da imagem */
-    text-transform: uppercase;
-}
-
-.cart {
-    font-size: 20px !important;
-    color: #fff !important;
-    cursor: pointer;
-}
-
-/* CATEGORIAS */
+/* CATEGORIAS (BARRA BRANCA) */
 #categorias-scroll {
     display: flex;
     overflow-x: auto;
@@ -60,6 +42,7 @@ body {
     gap: 20px;
     background: #fff;
     border-bottom: 1px solid #eee;
+    sticky; top: 60px; z-index: 1000;
 }
 
 #categorias-scroll::-webkit-scrollbar { display: none; }
@@ -70,6 +53,7 @@ body {
     color: #777;
     text-decoration: none;
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .cat-link.active {
@@ -77,54 +61,54 @@ body {
     border-bottom: 2px solid #ff6b00;
 }
 
-/* LISTA DE PRODUTOS - MATANDO O ESPAÇO VAZIO */
-.container-main {
+/* LISTA DE PRODUTOS - MATANDO O ESPAÇO VAZIO (CÍRCULO VERMELHO) */
+#cardapio-corpo {
     padding: 0 16px !important;
 }
 
+/* Esta é a classe que o seu JS está injetando */
 .item-produto-lista {
     display: flex !important;
     flex-direction: row !important;
-    align-items: center !important; /* Centraliza verticalmente texto e foto */
+    align-items: flex-start !important;
     justify-content: space-between !important;
-    padding: 15px 0 !important;
+    padding: 16px 0 !important;
     border-bottom: 1px solid #f2f2f2 !important;
+    gap: 12px;
 }
 
 .info-produto {
-    flex: 1 !important;
-    padding-right: 15px !important; /* Espaço mínimo entre texto e foto */
+    flex: 1 !important; /* Faz o texto ocupar o máximo de espaço até a foto */
 }
 
 .nome-produto-lista {
     font-size: 1rem !important;
-    font-weight: 700 !important;
+    font-weight: 800 !important;
     color: #000;
     margin-bottom: 4px !important;
-    display: block;
 }
 
 .desc-produto-lista {
-    font-size: 0.85rem !important;
+    font-size: 13px !important;
     color: #666 !important;
-    line-height: 1.2 !important;
-    margin-bottom: 6px !important;
+    line-height: 1.4;
+    margin-bottom: 8px !important;
 }
 
-/* Preço e "Ver opções" em Verde */
+/* PREÇO E VER OPÇÕES EM VERDE */
 .preco-unico, .ver-opcoes-link {
-    color: #2e7d32 !important;
-    font-weight: 700 !important;
     font-size: 1rem !important;
-    text-decoration: none !important;
+    font-weight: 800 !important;
+    color: #00a650 !important;
+    text-decoration: none;
 }
 
-/* FOTO E BOTÃO */
+/* FOTO E BOTÃO LARANJA */
 .foto-produto-lista {
     position: relative !important;
-    width: 85px !important;
-    height: 85px !important;
-    flex-shrink: 0 !important;
+    width: 90px !important;
+    height: 90px !important;
+    flex-shrink: 0 !important; /* Impede a foto de sumir */
 }
 
 .foto-produto-lista img {
@@ -138,27 +122,29 @@ body {
     position: absolute !important;
     bottom: -5px !important;
     right: -5px !important;
-    background: #f37021 !important; /* Laranja da imagem */
+    width: 30px !important;
+    height: 30px !important;
+    background: #ff6b00 !important;
     color: #fff !important;
-    width: 28px !important;
-    height: 28px !important;
-    border-radius: 50% !important;
     border: 2px solid #fff !important;
+    border-radius: 50% !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    font-size: 18px !important;
+    font-size: 20px !important;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* MODAIS - RESOLVENDO O PROBLEMA DE NÃO ABRIR */
-.modal-overlay {
-    display: none; /* COMEÇA FECHADO - O JS MUDA PARA 'FLEX' */
+/* MODAL (PIZZA/OPÇÕES) */
+#pizza-options-modal, .modal-overlay {
+    display: none; /* Começa fechado */
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.7);
     z-index: 9999;
     justify-content: center;
-    align-items: flex-end; /* Abre de baixo para cima */
+    align-items: flex-end;
 }
 
 .modal-box {
@@ -167,6 +153,4 @@ body {
     max-width: 500px;
     border-radius: 20px 20px 0 0;
     padding: 20px;
-    max-height: 90vh;
-    overflow-y: auto;
 }
