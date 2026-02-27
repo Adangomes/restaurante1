@@ -11,37 +11,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
-    <style>
-        :root { --primary: #e74c3c; --dark: #2c3e50; --light: #f8f9fa; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background: var(--light); padding-bottom: 100px; }
-        
-        header { background: white; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); sticky; top: 0; z-index: 100; }
-        .header-content { display: flex; align-items: center; gap: 15px; max-width: 800px; margin: 0 auto; position: relative; }
-        #loja-logo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
-        
-        .admin-btns { position: absolute; top: 0; right: 0; display: flex; gap: 10px; }
-        .btn-adm { background: none; border: none; color: #ccc; cursor: pointer; font-size: 1.2rem; }
-
-        #cardapio-corpo { max-width: 800px; margin: 20px auto; padding: 0 15px; }
-        .item-produto { background: white; margin-bottom: 15px; padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .info-p h3 { font-size: 1.1rem; }
-        .info-p p { font-size: 0.85rem; color: #777; margin: 5px 0; }
-        .preco { color: var(--primary); font-weight: 700; }
-        .foto-p img { width: 70px; height: 70px; border-radius: 10px; object-fit: cover; margin-left: 10px; }
-
-        /* Carrinho */
-        #btn-carrinho-fixo { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 15px 30px; border-radius: 40px; display: flex; gap: 20px; width: 90%; max-width: 400px; justify-content: space-between; cursor: pointer; z-index: 1000; font-weight: bold; }
-
-        /* Modais */
-        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:2000; align-items:center; justify-content:center; }
-        .modal-content { background:white; width:90%; max-width:500px; padding:20px; border-radius:15px; max-height: 80vh; overflow-y: auto; }
-        
-        /* Estilo Admin */
-        .area-admin { display: none; background: #eee; padding: 15px; text-align: center; border-bottom: 2px solid #ddd; }
-        .btn-add { background: #2ecc71; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-bottom: 10px; }
-        [contenteditable="true"] { border: 1px dashed var(--primary); background: #fffdfd; }
-    </style>
+   
 </head>
 <body>
 
